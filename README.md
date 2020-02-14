@@ -27,7 +27,7 @@
 
 	git pull 拉取/同步远程仓库的代码到本地
 
-## Please type ai-wen/vscode-eslint to confirm.
+## 取消fork
 在Github的三种操作：watch，star和fork
 
 watch也就是关注该repo的动态

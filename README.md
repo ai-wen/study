@@ -1,5 +1,5 @@
 # Git
-
+ 
 ## git"食用"方式
 **0> 配置git用户**
 
@@ -26,6 +26,32 @@
 **5>远程数据库到本地本地数据库再checkout到目录**
 
 	git pull 拉取/同步远程仓库的代码到本地
+
+##查看更改 
+git diff 
+
+可以查看本地的改动，即git status看到的文件的具体改动
+
+git diff commit-id1 commit-id2 --stat
+1
+这个指令可以看两个版本之间有哪些文件改动
+
+git diff branch1 branch2 --stat
+
+这个指令可以看两个分支之间有哪些文件差异
+
+git diff tag1 tag2 --stat
+
+这个指令可以看两个tag之间有哪些文件差异或者改动
+
+git log  file
+
+可以看到一个文件的改动，以commit的形式展现
+
+git log -p file
+
+可以看到具体一个文件的历史改动记录
+
 
 ## 取消fork
 在Github的三种操作：watch，star和fork

@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [               
+                "${workspaceFolder}/**",
+                "F:/GIT/vscode/opencv/sources/migw64/install/include",
+                "F:/GIT/vscode/opencv/sources/migw64/install/include/opencv",
+                "F:/GIT/vscode/opencv/sources/migw64/install/include/opencv2"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "D:/mingw64/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

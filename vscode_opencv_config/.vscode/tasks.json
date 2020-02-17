@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+           {
+            "label": "g++",
+            "type": "shell",
+            "command": "g++",
+            "args": [     "-g",  "${file}",  "-o",  "${fileBasenameNoExtension}.exe",
+                        "-I","F:/GIT/vscode/opencv/sources/migw64/install/include",
+                        "-I","F:/GIT/vscode/opencv/sources/migw64/install/include/opencv",
+                        "-I","F:/GIT/vscode/opencv/sources/migw64/install/include/opencv2",
+                        "-L", "F:/GIT/vscode/opencv/sources/migw64/install/x64/mingw/staticlib",
+                        "-l", "opencv_world349",
+                        "-l", "libjasper",
+                        "-l", "libjpeg-turbo",
+                        "-l", "libpng",
+                        "-l", "libtiff",
+                        "-l", "zlib",
+                        "-L", "D:\\mingw64\\x86_64-w64-mingw32\\lib",
+                        "-l", "gdi32",
+                        "-l", "opengl32",
+                        "-l", "Comdlg32",                        
+                ],
+            "problemMatcher": {    
+                "owner": "cpp",      
+                "fileLocation": [      
+                    "relative",      
+                    "${workspaceRoot}"      
+                ],      
+                "pattern": {      
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",      
+                    "file": 1,      
+                    "line": 2,      
+                    "column": 3,      
+                    "severity": 4,      
+                    "message": 5      
+                }      
+            } 
+        }
+    ]
+}

@@ -1,7 +1,7 @@
-# https://blog.csdn.net/qq_29600745/article/details/103676920
-# https://blog.csdn.net/zoeou/article/details/80934367
+#### https://blog.csdn.net/qq_29600745/article/details/103676920
+#### https://blog.csdn.net/zoeou/article/details/80934367
 
-x86_64-7.3.0-release-`posix`-sjlj-rt_v5-rev0  
+x86_64-7.3.0-release- `posix` -sjlj-rt_v5-rev0  
 	
 ```json
 c_cpp_properties.json

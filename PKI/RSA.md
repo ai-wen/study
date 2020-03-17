@@ -15,6 +15,8 @@ PSS (Probabilistic Signature Scheme)私钥签名流程的一种填充模式。
 PKCS（Public Key Cryptography Standards）是另一种通用的私钥签名填充模式。 因为pad的是定值 0xff（openssl），所以可以复用签名原文和签名。  
 而PSS无法从签名中恢复原来的签名。openssl-1.1.x以后默认使用更安全的PSS的RSA签名模式。  
 
+
+[参考博客](https://blog.csdn.net/mrpre/article/details/79740313)  
 SSA = Signature Scheme with Appendix   
 PSS = Probabilistic Signature Scheme   
 ES = Encryption Schemes   

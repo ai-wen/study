@@ -1,3 +1,18 @@
+# [libtomcrypt](https://github.com/libtom/libtomcrypt)
+libtomcrypt/src/pk/pkcs1/  路径下包含pkcs1 填充算法  
+pkcs_1_i2osp.c 
+pkcs_1_mgf1.c  
+pkcs_1_oaep_decode.c  
+pkcs_1_oaep_encode.c  
+pkcs_1_os2ip.c  
+pkcs_1_pss_decode.c  
+pkcs_1_pss_encode.c  
+pkcs_1_v1_5_decode.c  
+pkcs_1_v1_5_encode.c  
+
+
+
+
 RSA_PKCS1_PADDING （参看openssl： ./crypto/rsa/rsa_eay.c ）：  
 私钥加密时，使用的是： RSA_padding_add_PKCS1_type_1(…)   pad的是定值 0xff  
 公钥加密时，使用的是： RSA_padding_add_PKCS1_type_2(…)   pad的是随机的非零值   
@@ -23,6 +38,124 @@ ES = Encryption Schemes
 SSA是填充、封装格式    
 PSS是私钥签名流程。   
 ES 是公钥加密流程。  
+
+
+### RSAES-PKCS1-v1_5 加解密时对原文的填充格式
+|EM = |1字节|1字节|(模长-原文长-3)个字节| 1字节|原文长度(不大于模长-11)个字节| 
+| - | - | - | - | - |- |
+|EM=|0x00|0x02|PS(随机数)|0x00|M(原文)|
+
+ * RSAES-PKCS1-v1_5 加密流程  
+1：待加密数据为M，规范要求M必须不大于 模长-11。   
+2：满足1，然后生成没有字节0的随机值PS，PS的长度是 k - 原文长 - 3   
+EM= 0x00 || 0x02 || PS || 0x00 || M    
+C = EM ^e mod n
+* RSAES-PKCS1-v1_5 解密流程  
+1：校验C的长度，C必须是模长。   
+2：C ^d mod n得到EM  
+EM理论上是0x00 || 0x02 || PS || 0x00 || M这种格式的，所以校验的方法也相对比较简单。   
+先判断开头2字节是否是0x00 0x02，然后找到第一个0x00，这个0x00后面的值就是解密后的明文 。  
+
+### RSASSA-PKCS1-V1_5-SIGN 签名验签时对原文哈希值的填充格式
+封装格式名 EMSA-PKCS1-v1_5
+|EM = |1字节|1字节|(模长-T的长度-3)个字节| 1字节|T的长度个字节| 
+| - | - | - | - | - |- |
+|EM=|0x00|0x01|PS(随机数)|0x00|T|
+
+* RSASSA-PKCS1-V1_5-SIGN 签名流程  
+1：计算M的哈希值，H = hash(M)，哈希算法可以是MD5、SHA1、SHA2等算法。   
+2：对H进行ASN1(DigestInfo)编码得到T 。如果哈希算法确定，即oid确定，那么哈希数据H之前的ASN1数据都是确定的值。 
+EM = 0x00 || 0x01 || PS || 0x00 || T   
+C = EM^d mod n      
+``` cpp
+    DigestInfo ::= SEQUENCE {  
+         digestAlgorithm AlgorithmIdentifier,  
+         digest OCTET STRING  
+     }  
+
+    p = T
+    *p++ = ASN1_SEQUENCE | ASN1_CONSTRUCTED;
+    *p++ = (unsigned char) ( 0x08 + oid_size + hashlen );
+    *p++ = ASN1_SEQUENCE | ASN1_CONSTRUCTED;
+    *p++ = (unsigned char) ( 0x04 + oid_size );
+    *p++ = ASN1_OID;
+    *p++ = oid_size & 0xFF;
+    memcpy( p, oid, oid_size );
+    *p += oid_size;
+    *p++ = ASN1_NULL;
+    *p++ = 0x00;
+    *p++ = ASN1_OCTET_STRING;
+    *p++ = hashlen;
+    memcpy( p, H, hashlen );//哈希值在这里
+
+    MD2:     (0x)30 20 30 0c 06 08 2a 86 48 86 f7 0d 02 02 05 00 04 10 || H.
+    MD5:     (0x)30 20 30 0c 06 08 2a 86 48 86 f7 0d 02 05 05 00 04 10 || H.
+    SHA-1:   (0x)30 21 30 09 06 05 2b 0e 03 02 1a 05 00 04 14 || H.
+    SHA-224:  (0x)30 2d 30 0d 06 09 60 86 48 01 65 03 04 02 04 05 00 04 1c || H.
+    SHA-256: (0x)30 31 30 0d 06 09 60 86 48 01 65 03 04 02 01 05 00 04 20 || H.
+    SHA-384: (0x)30 41 30 0d 06 09 60 86 48 01 65 03 04 02 02 05 00 04 30 || H.
+    SHA-512: (0x)30 51 30 0d 06 09 60 86 48 01 65 03 04 02 03 05 00 04 40 || H.
+    SHA-512/224:  (0x)30 2d 30 0d 06 09 60 86 48 01 65 03 04 02 05 05 00 04 1c || H.
+    SHA-512/256:  (0x)30 31 30 0d 06 09 60 86 48 01 65 03 04 02 06 05 00 04 20 || H.
+```
+* RSASSA-PKCS1-V1_5-SIGN 验签流程  
+    与签名流程相逆
+
+
+
+### RSASSA-PSS 签名验签时原文填充的格式
+封装格式名 EMSA-PSS
+|DB = |（模长-2*哈希个字节-2）字节|1字节|hash个字节| 
+| - | - | - | - |
+|DB=|PS(全0填充)|0x01|salt|
+
+|EM = |maskDB(MGF运算后的DB)|hash个字节|1个字节| 
+| - | - | - | - |
+|EM = |maskDB|M'|0XBC|
+
+EM = PS || 0x01 || salt || M' || 0XBC  
+
+* 签名流程
+1：计算 mHash  = Hash(M)    
+2：生成上个步骤中哈希长度的随机值salt  
+3：计算 M' = Hash(00 00 00 00 00 00 00 00(8字节长) || mHash  || salt)  
+4：计算 DB = PS（全0字节,长度为模长-2*哈希个字节-2） || 0x01 || salt   
+5：进行MGF运算得到 maskedDB     
+6：签名运算  
+ EM = maskDB || M' || 0xBC   
+ C = EM^d mod n  
+
+                                 +-----------+  
+                                 |     M     |
+                                 +-----------+
+                                       |
+                                       V
+                                     Hash
+                                       |
+                                       V
+                         +--------+----------+----------+
+                    M' = |Padding1|  mHash   |   salt   |
+                         +--------+----------+----------+
+                                        |
+              +--------+----------+     V
+        DB =  |Padding2|   salt   |   Hash
+              +--------+----------+     |
+                        |               |
+                        V               |
+                       xor <--- MGF <---|
+                        |               |
+                        |               |
+                        V               V
+              +-------------------+----------+--+
+        EM =  |    maskedDB       |     H    |bc|
+              +-------------------+----------+--+
+ 
+*  验签流程 
+1：解密C，得到的结果是 EM。   
+2：解封装EM。EM解密出的结果是EM = maskDB || M' || 0xBC  
+3：恢复salt  
+    salt就是M’前的hashlen字节的值，只是被mask亦或了。我们只需要再被mask亦或一次，就能恢复salt。  
+4：执行MGF,
 
 下面是RSASSA-PSS签名使用的填充方式；   
 说明：   

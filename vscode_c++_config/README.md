@@ -20,7 +20,8 @@ VSCode 的设置Ctrl+Shift+P打开命令面板，简单输入settings，选择�
 智能的代码自动补全工具 TabNine  
 智能代码提示 Visual Studio Intellicode  
 Themes  
-最受欢迎主题 One Dark Pro  
+最受欢迎主题 One Dark Pro 
+Slack Theme   
 material icon  
 成对符号颜色显示 Bracket Pair Colorize  
 路径提示补全 Path Intellisense  

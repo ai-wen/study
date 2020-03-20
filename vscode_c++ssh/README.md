@@ -22,6 +22,6 @@ RSAAuthentication yes
 PubKeyAUthentication yes  
 PasswordAuthentications yes   
 6、使用密钥免密码登录  
-
+ssh-keygen -t rsa -b 4096 
 
 

@@ -4,25 +4,72 @@
 
 ![主机端设备枚举程序流程](hid.jpg)  
 
-## API 
-* CreateFile 
-* CloseHandle 
-* 1.设备到主机方向的数据通信 
-   + HidD_GetFeature
-   + HidD_GetInputReport
-   + ReadFile  
-* 2.主机到设备方向的数据通信。
-   + HidD_SetFeature
-   + WriteFile
-   + HidD_SetOutputReport
-* GetLastError() 会得到以下常见错误:
-    - 1 :           Error Code 1 (incorrect function)
-    不支持此函数，很可能是设备的报告描述符中未定义这样的报告类型（输入、输出、特征）
-    - 6 ：          句柄无效  
-    - 23 ：        数据错误（循环冗余码检查）  
-    - 87 ：        参数错误  
-     很可能是 createfile 时声明了异步方式，但是读取时按同步读取。
-    - 1784 ：     用户提供的 buffer 无效,传参时传入的“读取 buffer 长度”与实际的报告长度不符。  
+## API系列1 中断传输
+> * CreateFile 
+> * CloseHandle 
+> * 1.设备到主机方向的数据通信 
+>    + HidD_GetFeature
+>    + HidD_GetInputReport
+>    + ReadFile   **通过中断IN 进行数据传输**
+> * 2.主机到设备方向的数据通信。**（需要注意report ID的不同）**
+>    + HidD_SetFeature
+>    + WriteFile  **设备接收到输出报告请求，如果设备使用中断OUT进行数据传输则会通过中断 OUT 管道来进行传输；否则会使用 SetReport 请求通过控制管道来传输。**
+>    + HidD_SetOutputReport
+> * GetLastError() 会得到以下常见错误:
+>     - 1 :           Error Code 1 (incorrect function)
+>     不支持此函数，很可能是设备的报告描述符中未定义这样的报告类型（输入、输出、特征）
+>     - 6 ：          句柄无效  
+>     - 23 ：        数据错误（循环冗余码检查）  
+>     - 87 ：        参数错误  
+>      很可能是 createfile 时声明了异步方式，但是读取时按同步读取。
+>     - 1784 ：     用户提供的 buffer 无效,传参时传入的“读取 buffer 长度”与实际的报告长度不符。  
+
+## API系列2 控制传输
+> * CreateFile 
+> * CloseHandle 
+> * DeviceIoControl
+>    + IOCTL_STORAGE_MCN_CONTROL
+>   + 1.HID
+>     + IOCTL_HID_SET_OUTPUT_REPORT
+>     + IOCTL_HID_GET_INPUT_REPORT
+>   + 2.SCSI
+>     + IOCTL_SCSI_PASS_THROUGH_DIRECT
+> * CancelIo
+```cpp
+HID:
+DeviceIoControl(hHid,
+				IOCTL_HID_SET_OUTPUT_REPORT, //IOCTL_HID_GET_INPUT_REPORT
+				SendBuff,
+				(DataLength+1),
+				NULL,
+				0x0,
+				&numBytesReturned,
+				FALSE);	
+SCSI:
+	SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER sptdwb = {0};
+	sptdwb.sptd.Length = sizeof(SCSI_PASS_THROUGH_DIRECT);
+	sptdwb.sptd.PathId = 0;
+	sptdwb.sptd.TargetId = 1;
+	sptdwb.sptd.Lun = 0;
+	sptdwb.sptd.CdbLength = GM_CDB_GENERIC_LENGTH;
+	sptdwb.sptd.SenseInfoLength = SPT_SENSE_LENGTH;
+	sptdwb.sptd.DataIn = SCSI_IOCTL_DATA_OUT;//SCSI_IOCTL_DATA_IN
+	sptdwb.sptd.DataTransferLength = buffSize;
+	sptdwb.sptd.TimeOutValue = USB_SCSI_TIMEOUT;
+	sptdwb.sptd.DataBuffer = pDataWriteBuff;
+	sptdwb.sptd.SenseInfoOffset = offsetof(SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER,ucSenseBuf);
+	sptdwb.sptd.Cdb[0] = cmd;
+DeviceIoControl(_win32Handle,
+		IOCTL_SCSI_PASS_THROUGH_DIRECT,
+		&sptdwb,
+		sizeof(SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER),
+		&sptdwb,
+		sizeof(SCSI_PASS_THROUGH_DIRECT_WITH_BUFFER),
+		&bytesReturn,
+		&_ovSCSIOverlapped);
+
+```
+
 
 ## API 详解
 ``` cpp

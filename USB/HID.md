@@ -2,7 +2,7 @@
 
 ## 主机端设备枚举程序流程
 
-![主机端设备枚举程序流程](https://github.com/ai-wen/study/blob/master/USB/hid.jpg)  
+![主机端设备枚举程序流程](hid.jpg)  
 
 ## API系列1 中断传输
 > * CreateFile 

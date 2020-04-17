@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="libusb\core.c">
+      <Filter>libusb</Filter>
+    </ClCompile>
+    <ClCompile Include="libusb\descriptor.c">
+      <Filter>libusb</Filter>
+    </ClCompile>
+    <ClCompile Include="libusb\io.c">
+      <Filter>libusb</Filter>
+    </ClCompile>
+    <ClCompile Include="libusb\sync.c">
+      <Filter>libusb</Filter>
+    </ClCompile>
+    <ClCompile Include="libusb\os\linux_usbfs.c">
+      <Filter>libusb\os</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="libusb">
+      <UniqueIdentifier>{9143d786-d7d5-42df-a9bd-556aed63a0d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libusb\os">
+      <UniqueIdentifier>{bf0a7cbf-6f3d-4408-be43-562e64e082dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libusb\config.h">
+      <Filter>libusb</Filter>
+    </ClInclude>
+    <ClInclude Include="libusb\libusb.h">
+      <Filter>libusb</Filter>
+    </ClInclude>
+    <ClInclude Include="libusb\libusbi.h">
+      <Filter>libusb</Filter>
+    </ClInclude>
+    <ClInclude Include="libusb\os\linux_usbfs.h">
+      <Filter>libusb\os</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

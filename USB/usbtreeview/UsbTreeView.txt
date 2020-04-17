@@ -1,0 +1,233 @@
+
+UsbTreeView V3.1.5 - Shows the USB Device Tree
+Freeware by Uwe Sieber - www.uwe-sieber.de
+
+Works under Windows 2000, XP and higher
+
+Usage:
+UsbTreeView [/R:filename] [/L[n]:logfile]
+
+/R:filename    write (silently) a report to filename
+/L[n]:logfile  write a logfile for debugging, helpful in case of crash or hang (causes massive slowdown);
+               n is the optional loglevel, default is 3, max is 5; sample: /L4:C:\temp\UsbTreeView.log
+
+
+UsbTreeView is based upon the USBView sample from the Microsoft Windows Driver Kit for Windows Server 2003.
+
+Improvements:
+- refresh on device change performed asynchronously, per device and selected item stays selected
+- additional descriptors are decoded as Audio 2.0
+- shows additional information gathered from the Windows device management
+- shows drive letters/mountpoints and COM ports
+- can perform safe removal, device restart and port restart
+- better icons in the treeview
+- custom font and color for the right pane
+- toolbar with jump-lists for easily finding devices in complex trees
+- search to find device IDs, string descriptors etc
+- nodes of empty hubs kept closed
+
+History since V2.5.0, for old history see UsbTreeView.txt in here: http://www.uwe-sieber.de/files/usbtreeview261.zip
+
+V3.1.5   - New: Option to show the port chain instead the port number in the tree
+         - Bugfix: Some hexdumps where missing
+         - Bugfix: Device Qualifier Descriptor was requested for USB 1.x devices
+V3.1.4   - New: Copy tree to clipboard function
+         - New: Text copied to clipboard as HTML fragment enclosed in <pre> tags to get a monospaced font offhand
+         - New: SmartCard Reader Feature Descritpor decoded
+         - Bugfix: Volume of CDROM drives not recognized on arrival
+V3.1.3   - Bugfix: Wrong value shown for Clock Selector in Audio Control Clock Selector Unit Descriptor 2.0
+         - New: Full enumeration when missing USB device notifcation is detected (workaround for SILEX USB Device Servers)
+V3.1.2   - Bugfix: Occasional crash on safe removal
+         - Bugfix: Since V3.0.6 no device information for UHCI controllers under Windows 2000
+         - Bugfix: wPacketSize decoded wrong if SuperSpeed device reported a Device Bus Speed of 0x02
+V3.1.1   - New: Can show multiple Configuration and Other-Speed-Configuration Descriptors
+         - New: TreeView sub-menu to copy some id strings to clipboard
+         - New: Basic check for DLL hijacking
+V3.1.0   - Bugfix: Removal of storage volumes not handled correctly
+         - New: Project is UNICODE now, so non-ASCII string descriptors are shown correctly even the Windows ANSI codepage cannot
+         - New: Improved robustness when decoding invalid descriptors
+         - New: Option "Always On Top"
+V3.0.8   - Bugfix: No more font change in the text pane when hitting some special charaters
+V3.0.7   - New: Improved detection of arrival/removal of child devices
+         - New: Devices in low power state but no problem code get a 'D1', 'D2' etc icon instead of an exclamation mark
+         - New: Workaround for a strange phenomenon: On some Windows device notifications come with wide strings
+                even RegisterDeviceNotificationA was used; This is dealt with now.
+V3.0.6   - New: Support for virtual USB Controllers where Hostcontroller and Root-Hub are one and the same device
+V3.0.5   - New: New port property PortConnectorIsTypeC (Win10 only)
+V3.0.4   - New: Device Manager problem numbers shown in the treeview icons
+V3.0.3   - New: Search hits get highlighted in the text pane (which is a Richedit control now)
+V3.0.2   - Bugfix: Dropdown lists not refreshed on device arrival and removal
+V3.0.1   - Bugfix: Crash on full refresh
+V3.0.0   - New: No more enumeration of all devices on arrival and removal of a USB device
+         - New: Search function (not full text, only things like device ID, drive letter, volume name etc)
+         - New: Toolbar controls shrink if required
+         - New: Some new Keyboard shortcuts (Alt+D to open the drives list, Alt+O the Others list, Alt+S to focus the
+                search edit, Alt+Left/Right to cycle thru the search hits
+         - New: options not to expand empty hubs or hub with only empty hubs attached
+         - New: options to jump to arrived and removed devices
+         - New: option to expand tree items to make selected arrived and removed devices visible
+         - New: Uses Windows visual theme with option to turn it off
+V2.6.1   - Bugfix: Limit of 32 root hubs removed
+         - Bugfix: Other Speed Configuration' descriptors were not read
+         - New: Shows progress information in the status bar, when stuck giving a hint where
+         - New: Getting Microsoft String Descritor 0xEE can be deactivated because it causes some devices to freeze.
+                If in the Registry under HKLM\SYSTEM\CurrentControlSet\Control\UsbFlags\VVVVPPPPRRRR there is a
+                osvc value != 0 then UsbTreeView reads it anyway because Windows already read it successfully.
+                VVVVPPPPRRRR is a 12 digit hex value containing idVendor, idProduct and bcdDevice from the USB Device Descriptor
+V2.6.0   - Bugfix: bRefresh field in endpoint descriptors of Audio 1.0 devices was not shown
+V2.5.9   - Bugfix: Wrong warning about characters below 0x20 in some string descriptors
+         - Bugfix: Delay on opening a Windows Device Manager device properties dialog removed
+         - New: Decoding of Microsoft string descriptor 0xEE
+V2.5.8   - Bugfix: Decoding of SuperSpeedPlus descriptor and some others fixed
+V2.5.7   - New: Display SuperSpeedPlus in Connection Information V2 under Windows 10
+V2.5.6   - Bugfix: String descriptors containing invalid characters where not shown at all
+         - Bugfix: Crash when more than 64 ports per hub
+         - New: On Windows 8 and 10 the Microsoft USB stack returns for USB devices running at SuperSpeed a
+                Device Bus Speed of 0x02 (High-Speed). So far UsbTreeView faked it to 0x03 (SuperSpeed) as Microsoft's USBview does.
+                Now the truely returned value is shown with a hint if it is not the true speed.
+V2.5.5   - Bugfix: Occasional crash after device safe removal or reactivation
+V2.5.4   - Bugfix: Crash on H.264 WebCams
+         - Bugfix: Crash when more than 127 USB devices
+         - New: Reading of the Microsoft specific string descriptor 0xEE
+V2.5.3   - New/Bugfix: USB Attached SCSI drives (UASPStor) shown with drive letter in the tree and in the drives combobox
+V2.5.2   - New: Option to show the drive numbers in the tree, e.g. Disk3, CdRom1 etc.
+V2.5.1   - Bugfix: Since V2.5.0 possible crash when getting a string descriptor
+V2.5.0   - New: Audio 2.0 descriptors
+
+
+
+ToDo:
+- USB Video Class H.264 decoding
+
+
+About the icons
+
+Computer       : Computer
+blue USB       : empty port
+blue+red USB   : port with a device connected (no error, no problem)
+Controller Card: USB host controller
+Root           : USB root hub
+Hub green      : Standard hub
+Hub blue       : Standard hub SuperSpeed
+Number         : Problem code from Windows device manager
+D1..D4         : Power state from Windows device manager if not D0 and no problem code
+Exclamation    : Error when reading a USB descriptor
+Red E          : Unexpected error
+
+Keyboard shortcuts:
+F5               re-enumeration of all information
+Ctrl+S           save full report
+Ctrl+Alt+S       save report from selected item
+Alt+D            open the drives list
+Alt+O            open the "Others" list
+Alt+S            focus the search edit
+Alt+Left/Right   cycle thru the search hits 
+
+
+About Unknown Descriptors
+
+There are two reasons why decriptors cannot be decoded and therefore
+shown as "Unknown":
+- decoding is not implemented
+- the device's InterfaceClass is 0xFF (vendor specific), so class specific
+  descriptors cannot be decoded since their class is unknown
+
+So, if you have an unknown descriptor and the interface class is not 0xFF
+then please let me know, maybe I find the right specification document
+and can add the decoding for it.
+
+HID descriptors usually cannot be read. Probably this is because they
+must be requested from the interface rather than the device but the
+IOCTL_USB_GET_DESCRIPTOR_FROM_NODE_CONNECTION call doesn't offer the
+choice. The parameters are ignored and filled by the USB stack:
+MSDN says: "the USB stack ignores the value of bmRequest and inserts
+a value of 0x80 which indicates standard USB device request".
+https://msdn.microsoft.com/en-us/library/windows/hardware/ff539272%28v=vs.85%29.aspx
+For most devices the result is an ERROR_GEN_FAILURE or ERROR_INVALID_PARAMETER.
+But some devices return the HID descriptor anyway.
+
+
+
+About "Safe Removal" and "Restart"
+
+On Safe Removal UsbTreeView first calls the configuration management call
+CM_Query_And_Remove_SubTree. On success the device has the problem code
+21 which is CM_PROB_WILL_BE_REMOVED. A code 21 device can be reactivated
+by performing a DIF_PROPERTYCHANGE class installer call. This is what
+UsbTreeView does if you select "Restart device".
+But CM_Query_And_Remove_SubTree needs admin privileges, otherwise it fails
+with CR_ACCESS_DENIED. In this case CM_Request_Device_Eject is called
+which works without admin privileges but leads to problem code 47 which
+is CM_PROB_HELD_FOR_EJECT. Such a device cannot be reactivated alone.
+A reactivation is possible by restarting the port or the whole hub it is
+attached to. But the latter of course restarts all devices attached to
+the hub.
+
+In all cases UsbTreeView just performs the system call and shows a
+message-box if Windows returns an error. But Windows does not always
+return an error, even there was one, so sometimes nothing happens at all.
+
+
+
+About "Restart Port"
+
+This calls IOCTL_USB_HUB_CYCLE_PORT which simulates a disconnect and
+reconnect of the attached device.
+It is available under XP but usually only for hubs which run with the
+Microsoft standard driver. 3rd party drivers usually return
+ERROR_UNKNOWN_FUNCTION.
+Under Vista and Windows 7 it is no more supported by the Windows standard
+drivers, it always fails with ERROR_NOT_SUPPORTED.
+Since Windows 8 it works again but in contrast to XP admin privileges
+are required. Without admin privileges it fails as under Vista and Win7
+with ERROR_NOT_SUPPORTED.
+
+
+About the Debug-Port
+
+In Microsoft's USBView sample there is a list of USB host controllers
+and their debug port. I've put the table into UsbTreeView, it shows
+then in the properties of the host controller a line like so:
+DebugPort (from List): 1
+Windows 8 has extended USB information, it reports for each port if it
+is debug capable and this works indeed (seen on a i945G Chipset with ICH7).
+
+
+
+USB Mouses
+
+If an USB mouse is moved while the tool requests its USB properties there
+is usually an error because the mouse just has more important things to
+do than answering descriptor requests. UsbTreeView tries then for some
+seconds to get this information.
+You might see the yellow question mark at the mouse's tree node for a
+moment which disappears as soon as you stop moving the mouse.
+This retry mechanism is done for all type of devices but usually its a
+mouse where it helps.
+
+
+Information shown in the tree-view
+
+UsbTreeView is optimized for speed, therefore USB string descriptors are
+not gathered before a device is selected in the tree-view. So, information
+which come from USB string descriptors cannot be shown in the tree-view, it
+all comes from the Windows device manager.
+This is also why creating a full report takes a moment.
+
+
+Always On Top
+
+By default the state of the "Always On Top" option is persistent (written
+to and read from the INI). If you find this annoying then add the line
+TopmostPersistent=0
+to section [Settings] in the UsbTreeView.ini, then "Always On Top" is
+no more written to the INI, so you can set Topmost=0 or Topmost=1 and
+keep this as startup default.
+
+
+
+Uwe Sieber, mail@uwe-sieber.de
+Feb 2018
+
+
+

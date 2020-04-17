@@ -8,7 +8,10 @@
 
 #define VID 0x055c
 #define PID 0xe618
- 
+#define CDPID 0xdb08
+#define CCIDHIDPID 0xf603
+#define CCIDCDPID 0xe917
+
 static void print_devs(libusb_device **devs)
 {
 	libusb_device *dev;
@@ -262,16 +265,58 @@ static int test_key(libusb_device_handle *handle, uint8_t endpoint_in, uint8_t e
 #endif
 }
 
+
+void show_device_descriptor(const  struct libusb_device_descriptor* dev_desc)
+{
+	printf("\n--------device descriptor:--------------\n");
+	printf("            length: %d\n", dev_desc->bLength);
+	printf("      device class: %d\n", dev_desc->bDeviceClass);
+	printf("               S/N: %d\n", dev_desc->iSerialNumber);
+	printf("           VID:PID: %04X:%04X\n", dev_desc->idVendor, dev_desc->idProduct);
+	printf("         bcdDevice: %04X\n", dev_desc->bcdDevice);
+	printf("   iMan:iProd:iSer: %d:%d:%d\n", dev_desc->iManufacturer, dev_desc->iProduct, dev_desc->iSerialNumber);
+	printf("          nb confs: %d\n", dev_desc->bNumConfigurations);
+	printf("\n----------------------------------------\n");
+}
+
+void show_interface_descriptor(const struct libusb_interface_descriptor *altsetting)
+{
+	printf("\n--------interface_descriptor--------------\n");
+	printf(" Number of this interface = %d\n", altsetting->bInterfaceNumber);
+	printf(" Number of endpoints used by this interface = %d\n", altsetting->bNumEndpoints);
+	printf(" Class.SubClass.Protocol: %02X.%02X.%02X\n",altsetting->bInterfaceClass,altsetting->bInterfaceSubClass,altsetting->bInterfaceProtocol);
+	printf("\n----------------------------------------\n");
+}
+
+
+void show_endpoint_descriptor(const struct libusb_endpoint_descriptor *endpoint)
+{
+	printf("\n--------endpoint_descriptor--------------\n");
+	printf("endpoint address: %02X\n", endpoint->bEndpointAddress);
+	printf("endpoint max packet size: %04X\n", endpoint->wMaxPacketSize);
+	printf("endpoint polling interval: %02X\n", endpoint->bInterval);
+	printf("\n----------------------------------------\n");
+}
+
+
+/*
+协议类型  interfaceClass 
+接口描述符interfaceNum
+接收端点  endpoint_in
+发送端点  endpoint_out
+*/
+
 int main(void)
 {
 #if 1
 	libusb_device *dev;
 	libusb_device_handle *usb_handle;
+
 	struct libusb_device_descriptor dev_desc;
 	struct libusb_config_descriptor *conf_desc;
 	const struct libusb_endpoint_descriptor *endpoint;
 	
-	int iface, nb_ifaces;
+	int iface;
 	uint8_t endpoint_in = 0, endpoint_out = 0;
 	int i, j, k;
 	int r;
@@ -281,82 +326,206 @@ int main(void)
 	if (r < 0)
 		return r;
  
-	usb_handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+	usb_handle = libusb_open_device_with_vid_pid(NULL, VID, PID);//CCIDHIDPID
+	if (0 == usb_handle)
+		return 0;
+
 	dev = libusb_get_device(usb_handle);
 
-	printf("\nReading device descriptor:\n");
-	libusb_get_device_descriptor(dev, &dev_desc);
-	printf("            length: %d\n", dev_desc.bLength);
-	printf("      device class: %d\n", dev_desc.bDeviceClass);
-	printf("               S/N: %d\n", dev_desc.iSerialNumber);
-	printf("           VID:PID: %04X:%04X\n", dev_desc.idVendor, dev_desc.idProduct);
-	printf("         bcdDevice: %04X\n", dev_desc.bcdDevice);
-	printf("   iMan:iProd:iSer: %d:%d:%d\n", dev_desc.iManufacturer, dev_desc.iProduct, dev_desc.iSerialNumber);
-	printf("          nb confs: %d\n", dev_desc.bNumConfigurations);
+	//获取设备描述符
+	libusb_get_device_descriptor(dev, &dev_desc);	
+	//show_device_descriptor(&dev_desc);
 
-	printf("\nReading first configuration descriptor:\n");
+	//获取首个配置描述符
 	libusb_get_config_descriptor(dev, 0, &conf_desc);
-	nb_ifaces = conf_desc->bNumInterfaces;
-	printf("             nb interfaces: %d\n", nb_ifaces);
+	
+	/*
+	if (1 == conf_desc->bNumInterfaces)
+	{
+		//单协议设备
+		for (j = 0; j < conf_desc->interface[0].num_altsetting; j++)
+		{
+			for (k = 0; k < conf_desc->interface[0].altsetting[j].bNumEndpoints; k++)
+			{
+				endpoint = &conf_desc->interface[0].altsetting[j].endpoint[k];
+				const char* transfer_type = NULL;
+				const char* direction = NULL;
 
-	for (i=0; i<nb_ifaces; i++) {
-		printf("              interface[%d]: id = %d\n", i,
-			conf_desc->interface[i].altsetting[0].bInterfaceNumber);
-		for (j=0; j<conf_desc->interface[i].num_altsetting; j++) {
-			printf("interface[%d].altsetting[%d]: num endpoints = %d\n",
-				i, j, conf_desc->interface[i].altsetting[j].bNumEndpoints);
-			printf("   Class.SubClass.Protocol: %02X.%02X.%02X\n",
-				conf_desc->interface[i].altsetting[j].bInterfaceClass,
-				conf_desc->interface[i].altsetting[j].bInterfaceSubClass,
-				conf_desc->interface[i].altsetting[j].bInterfaceProtocol);
+				if ((endpoint->bmAttributes & 0x3) == LIBUSB_TRANSFER_TYPE_BULK)
+					transfer_type = "BULK";
 
-			for (k=0; k<conf_desc->interface[i].altsetting[j].bNumEndpoints; k++) {
-				endpoint = &conf_desc->interface[i].altsetting[j].endpoint[k];
-				printf("       endpoint[%d].address: %02X\n", k, endpoint->bEndpointAddress);
-
-				// Use the first interrupt or bulk IN/OUT endpoints as default for testing
-				if ((endpoint->bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) & (LIBUSB_TRANSFER_TYPE_BULK | LIBUSB_TRANSFER_TYPE_INTERRUPT)) {
-					if (endpoint->bEndpointAddress & LIBUSB_ENDPOINT_IN) {
-						if (!endpoint_in)
-							endpoint_in = endpoint->bEndpointAddress;
-					} else {
-						if (!endpoint_out)
-							endpoint_out = endpoint->bEndpointAddress;
-					}
+				if ((endpoint->bmAttributes & 0x3) == LIBUSB_TRANSFER_TYPE_INTERRUPT)
+					transfer_type = "INT";
+				
+				if (endpoint->bEndpointAddress & LIBUSB_ENDPOINT_IN)
+				{
+					//endpoint_in = endpoint->bEndpointAddress;//endpoint_in = 1000 0001 = 0x81
+					direction = "IN";
 				}
-				printf("           max packet size: %04X\n", endpoint->wMaxPacketSize);
-				printf("          polling interval: %02X\n", endpoint->bInterval);
+				else
+				{
+					//endpoint_out = endpoint->bEndpointAddress;//endpoint_out = 0000 0001 = 0x1
+					direction = "OUT";
+				}
+
+				printf("Endpoint %d %s: Type=%s Class=%02x SubClass=%02x Protocol=%02x MaxPacket=%02x\n",
+					endpoint->bEndpointAddress & 0xF, direction, transfer_type,
+					conf_desc->interface[0].altsetting[j].bInterfaceClass, conf_desc->interface[0].altsetting[j].bInterfaceSubClass, conf_desc->interface[0].altsetting[j].bInterfaceProtocol,
+					endpoint->wMaxPacketSize
+				);
+			}
+		}
+
+	}
+
+	if (2 == conf_desc->bNumInterfaces)
+	{
+		//复合协议设备
+		for (i = 0; i < conf_desc->bNumInterfaces; i++)
+		{
+			for (j = 0; j < conf_desc->interface[i].num_altsetting; j++) 
+			{
+				for (k = 0; k < conf_desc->interface[i].altsetting[j].bNumEndpoints; k++)
+				{
+					endpoint = &conf_desc->interface[i].altsetting[j].endpoint[k];
+					const char* transfer_type = NULL;
+					const char* direction = NULL;
+
+					if ((endpoint->bmAttributes & 0x3) == LIBUSB_TRANSFER_TYPE_BULK)
+						transfer_type = "BULK";
+
+					if ((endpoint->bmAttributes & 0x3) == LIBUSB_TRANSFER_TYPE_INTERRUPT)
+						transfer_type = "INT";
+
+					if (endpoint->bEndpointAddress & LIBUSB_ENDPOINT_IN)
+					{
+						//endpoint_in = endpoint->bEndpointAddress;//endpoint_in = 1000 0001 = 0x81
+						direction = "IN";
+					}
+					else
+					{
+						//endpoint_out = endpoint->bEndpointAddress;//endpoint_out = 0000 0001 = 0x1
+						direction = "OUT";
+					}
+
+					printf("Endpoint %d %s: Type=%s Class=%02x SubClass=%02x Protocol=%02x MaxPacket=%02x\n",
+						endpoint->bEndpointAddress & 0xF, direction, transfer_type,
+						conf_desc->interface[i].altsetting[j].bInterfaceClass, conf_desc->interface[i].altsetting[j].bInterfaceSubClass, conf_desc->interface[i].altsetting[j].bInterfaceProtocol,
+						endpoint->wMaxPacketSize
+					);
+				}
+			}
+		}
+		
+	}
+	*/
+
+
+	//接口数量 复合设备bNumInterfaces=2 
+	printf("接口数量NumInterfaces=%d\n", conf_desc->bNumInterfaces);
+	for (i=0; i< conf_desc->bNumInterfaces; i++)
+	{
+		printf("接口描述符数量num_altsetting=%d\n", conf_desc->interface[i].num_altsetting);
+		for (j = 0; j < conf_desc->interface[i].num_altsetting ; j++) 
+		{
+			if (conf_desc->interface[i].altsetting[j].bInterfaceClass == LIBUSB_CLASS_SMART_CARD)
+			{
+				printf("SMART_CARD\n");
+			}
+			if (conf_desc->interface[i].altsetting[j].bInterfaceClass == LIBUSB_CLASS_HID)
+			{
+				printf("HID\n");
+			}
+			if (conf_desc->interface[i].altsetting[j].bInterfaceClass == LIBUSB_CLASS_MASS_STORAGE)
+			{
+				printf("CD\n");
+			}
+						
+			//show_interface_descriptor(&conf_desc->interface[i].altsetting[j]);
+			printf("接口描述符中支持端点数量NumEndpoints=%d\n", conf_desc->interface[i].altsetting[j].bNumEndpoints);
+			for ( k=0; k<conf_desc->interface[i].altsetting[j].bNumEndpoints; k++) 
+			{
+				endpoint = &conf_desc->interface[i].altsetting[j].endpoint[k];   
+				//show_endpoint_descriptor(endpoint);
+
+				//endpoint->bmAttributes
+				//Bits 0:1 determine the transfer type and correspond to ref libusb_transfer_type.			0x0000 0011 = 0x3
+				//Bits 2:3 are only used for isochronous endpoints and correspond to ref libusb_iso_sync_type.
+			    //Bits 4:5 are also only used for isochronous endpoints and correspond to ref libusb_iso_usage_type.
+				//Bits 6:7 are reserved.
+
+				//LIBUSB_TRANSFER_TYPE_CONTROL = 0,// Control endpoint
+				//LIBUSB_TRANSFER_TYPE_ISOCHRONOUS = 1,// Isochronous endpoint 
+				//LIBUSB_TRANSFER_TYPE_BULK = 2,// Bulk endpoint 
+				//Z = 3,//Interrupt endpoint 
+				//LIBUSB_TRANSFER_TYPE_BULK_STREAM = 4,//Stream endpoint
+
+				const char* transfer_type = NULL;
+				const char* direction = NULL;
+
+				if ((endpoint->bmAttributes & 0x3)  ==  LIBUSB_TRANSFER_TYPE_BULK )
+				{
+					transfer_type = "BULK";
+				}
+
+				if ((endpoint->bmAttributes & 0x3) == LIBUSB_TRANSFER_TYPE_INTERRUPT)
+				{
+					transfer_type = "INT";
+				}
+
+
+				//endpoint->bEndpointAddress 
+				//Bits 0:3 arethe endpoint number.		0x0000 0001
+				//Bits 4:6 are reserved.				0x0 000 0001 = 0x1
+				//Bit 7 indicates direction				0x1 000 0001 = 0x81
+				//printf("endpoint number = %d",endpoint->bEndpointAddress & 0xF); 
+				if (endpoint->bEndpointAddress & LIBUSB_ENDPOINT_IN)
+				{
+					//endpoint_in = 1000 0001 = 0x81
+					endpoint_in = endpoint->bEndpointAddress;
+					direction = "IN";
+				}
+				else
+				{
+					//endpoint_out = 0000 0001 = 0x1
+					endpoint_out = endpoint->bEndpointAddress;
+					direction = "OUT";
+				}
+
+
+				printf("Endpoint %d %s: Type=%s Class=%02x SubClass=%02x Protocol=%02x MaxPacket=%02x\n",
+					endpoint->bEndpointAddress & 0xF, direction, transfer_type, 
+					conf_desc->interface[i].altsetting[j].bInterfaceClass, conf_desc->interface[i].altsetting[j].bInterfaceSubClass, conf_desc->interface[i].altsetting[j].bInterfaceProtocol,
+					endpoint->wMaxPacketSize
+					);
 			}
 		}
 	}
+	
+
 	libusb_free_config_descriptor(conf_desc);
 	libusb_set_auto_detach_kernel_driver(usb_handle, 1);
 
-	for (iface = 0; iface < nb_ifaces; iface++) {
+	for (iface = 0; iface < conf_desc->bNumInterfaces; iface++)
+	{
 		printf("\nClaiming interface %d...\n", iface);
 		r = libusb_claim_interface(usb_handle, iface);
-		if (r != LIBUSB_SUCCESS) {
+		if (r != LIBUSB_SUCCESS) 
+		{
 			printf("   Failed.\n");
 		}
 	}
 
 	
-	
 	 test_key(usb_handle, endpoint_in, endpoint_out);
 	 test_hid(usb_handle, endpoint_in);
-	/*
-	struct skf_dev skf_dev = {
-		.handle = usb_handle,
-		.ep_in = endpoint_in, 
-		.ep_out = endpoint_out};
-	skf_setlabel(&skf_dev, "xoxo");
 
-	for (iface = 0; iface<nb_ifaces; iface++) {
+	for (iface = 0; iface< conf_desc->bNumInterfaces; iface++)
+	{
 		printf("Releasing interface %d...\n", iface);
 		libusb_release_interface(usb_handle, iface);
 	}
-	*/
-
+	
 	libusb_close(usb_handle);
 	libusb_exit(NULL);
 #else

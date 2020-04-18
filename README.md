@@ -1,4 +1,5 @@
 # ![深入理解log机制](http://feihu.me/blog/2014/insight-into-log/) 
+http://feihu.me/blog/2014/insight-into-log/   
 # Git
  
 ## git"食用"方式

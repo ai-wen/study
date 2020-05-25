@@ -8,7 +8,7 @@ int main()
 {
 	FILE* fp = fopen("usb.log", "w");
 
-	daemon(0, 0);
+	//daemon(0, 0);
 
 	libusb_context *g_ctx = NULL;
 	libusb_device **devs = NULL, *dev = NULL;
@@ -69,7 +69,7 @@ int main()
 	}
 	
 
-	fclose(fp);
+	//fclose(fp);
 
 	if (devs)
 		libusb_free_device_list(devs, 1);
@@ -81,3 +81,5 @@ int main()
 	//
     return 0;
 }
+
+

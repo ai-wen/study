@@ -1,0 +1,32 @@
+﻿  Validating sources
+  Copying sources remotely to '192.168.150.128'
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  device_usb.cpp
+D:\Git\study\USB\libusb\device_usb.cpp(116,9): warning : conversion to ‘int’ from ‘ssize_t {aka long int}’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(116,9): warning :   devNum = libusb_get_device_list(_ctx, &tmpdevs);//ö�ٵ�ʱ���Ѿ�����libusb_ref_device��ÿһ���豸���������ü���
+D:\Git\study\USB\libusb\device_usb.cpp(116,9): warning :          ^
+D:\Git\study\USB\libusb\device_usb.cpp(150,19): warning : conversion to ‘int’ from ‘std::vector<libusb_device*>::size_type {aka long unsigned int}’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(150,19): warning :   return devs.size();
+D:\Git\study\USB\libusb\device_usb.cpp(150,19): warning :                    ^
+D:\Git\study\USB\libusb\device_usb.cpp(159,9): warning : conversion to ‘int’ from ‘ssize_t {aka long int}’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(159,9): warning :   devNum = libusb_get_device_list(_ctx, &tmpdevs);//ö�ٵ�ʱ���Ѿ�����libusb_ref_device��ÿһ���豸���������ü���
+D:\Git\study\USB\libusb\device_usb.cpp(159,9): warning :          ^
+D:\Git\study\USB\libusb\device_usb.cpp(192,19): warning : conversion to ‘int’ from ‘std::vector<libusb_device*>::size_type {aka long unsigned int}’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(192,19): warning :   return devs.size();
+D:\Git\study\USB\libusb\device_usb.cpp(192,19): warning :                    ^
+D:\Git\study\USB\libusb\device_usb.cpp(219,56): warning : conversion to ‘uint8_t {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(219,56): warning :     r = libusb_get_config_descriptor(devs, h, &conf_desc);
+D:\Git\study\USB\libusb\device_usb.cpp(219,56): warning :                                                         ^
+D:\Git\study\USB\libusb\device_usb.cpp(225,27): warning : conversion to ‘uint8_t {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(225,27): warning :      tmpkey.interfaceIndex = i;//��¼�ӿ�������index
+D:\Git\study\USB\libusb\device_usb.cpp(225,27): warning :                            ^
+D:\Git\study\USB\libusb\device_usb.cpp(237,24): warning : conversion to ‘uint8_t {aka unsigned char}’ from ‘uint16_t {aka short unsigned int}’ may alter its value [-Wconversion]
+D:\Git\study\USB\libusb\device_usb.cpp(237,24): warning :        tmpkey.maxPacket = endpoint->wMaxPacketSize;
+D:\Git\study\USB\libusb\device_usb.cpp(237,24): warning :                         ^
+D:\Git\study\USB\libusb\device_usb.cpp(313,1): warning : no return statement in function returning non-void [-Wreturn-type]
+D:\Git\study\USB\libusb\device_usb.cpp(313,1): warning :  }
+D:\Git\study\USB\libusb\device_usb.cpp(313,1): warning :  ^
+  Linking objects
+  test.vcxproj -> D:\Git\study\USB\libusb\bin\x64\Debug\gm300test.out

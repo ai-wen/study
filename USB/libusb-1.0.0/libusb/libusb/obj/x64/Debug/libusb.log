@@ -1,0 +1,46 @@
+﻿  Validating sources
+  Copying sources remotely to '192.168.1.64'
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  linux_usbfs.c
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusb.h(914): warning : conversion to ‘int’ from ‘long unsigned int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusb.h(1111): warning : conversion to ‘uint16_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusb.h(1111): warning : conversion to ‘uint16_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusb.h(1133): warning : conversion to ‘uint16_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusb.h(1133): warning : conversion to ‘uint16_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\..\libusbi.h(254): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(282): warning : conversion to ‘size_t’ from ‘ssize_t’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(322): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(333): warning : conversion to ‘__off_t’ from ‘long unsigned int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(354): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(405): warning : conversion of unsigned constant value to negative integer
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(411): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(414): warning : conversion to ‘int’ from ‘long unsigned int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(415): warning : conversion to ‘size_t’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(434): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(467): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(528): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(535): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(547): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(694): warning : conversion to ‘int’ from ‘ssize_t’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(716): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(823): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(907): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(907): warning : conversion to ‘uint8_t’ from ‘int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1091): warning : conversion to ‘unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1092): warning : conversion to ‘unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1151): warning : conversion to ‘unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1279): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1385): warning : conversion to ‘int’ from ‘unsigned int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1387): warning : conversion to ‘unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1387): warning : conversion to ‘int’ from ‘unsigned int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1392): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1421): warning : conversion to ‘unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1421): warning : conversion to ‘int’ from ‘unsigned int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1430): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1522): warning : conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(1693): warning : conversion to ‘int’ from ‘long int’ may alter its value
+D:\Git\study\USB\libusb-1.0.0\libusb\libusb\libusb\os\linux_usbfs.c(285): warning : will never be executed
+  Linking objects
+  libusb.vcxproj -> D:\Git\study\USB\libusb-1.0.0\libusb\libusb\bin\x64\Debug\libusb.out

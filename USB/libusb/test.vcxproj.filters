@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="libusb_test.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="device_manager.cpp">
+      <Filter>linux</Filter>
+    </ClCompile>
+    <ClCompile Include="device_usb.cpp">
+      <Filter>linux</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libusb.h" />
+    <ClInclude Include="device_manager.h">
+      <Filter>linux</Filter>
+    </ClInclude>
+    <ClInclude Include="device_usb.h">
+      <Filter>linux</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="linux">
+      <UniqueIdentifier>{87e51cb5-e630-477b-bb2f-3dd487834b20}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -76,10 +76,14 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="device_manager.cpp" />
+    <ClCompile Include="device_usb.cpp" />
     <ClCompile Include="libusb_test.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="device_manager.h" />
+    <ClInclude Include="device_usb.h" />
     <ClInclude Include="libusb.h" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">

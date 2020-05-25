@@ -923,10 +923,12 @@ static int sysfs_get_device_list(struct libusb_context *ctx,
 	while ((entry = readdir(devices))) {
 		struct discovered_devs *discdevs_new = discdevs;
 
+		
 		if ((!isdigit(entry->d_name[0]) && strncmp(entry->d_name, "usb", 3))
 				|| strchr(entry->d_name, ':'))
 			continue;
 
+		printf("%s\n", entry->d_name);
 		r = sysfs_scan_device(ctx, &discdevs_new, entry->d_name,
 			usbfs_fallback);
 		if (r < 0)

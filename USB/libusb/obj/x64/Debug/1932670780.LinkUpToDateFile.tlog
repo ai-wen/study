@@ -1,0 +1,1 @@
+g++ -o "/root/projects/gm300test/bin/x64/Debug/gm300test.out" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack /root/projects/gm300test/obj/x64/Debug/device_manager.o /root/projects/gm300test/obj/x64/Debug/device_usb.o /root/projects/gm300test/obj/x64/Debug/libusb_test.o /root/projects/gm300test/obj/x64/Debug/main.o -l"usb-1.0" -ldl

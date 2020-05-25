@@ -306,7 +306,7 @@ void show_endpoint_descriptor(const struct libusb_endpoint_descriptor *endpoint)
 ·¢ËÍ¶Ëµã  endpoint_out
 */
 
-int main(void)
+int main2(void)
 {
 #if 1
 	libusb_device *dev;

@@ -6,7 +6,8 @@
 
 ##### PCIE（PCI Express)设备
 PCIE插槽是可以向下兼容的，比如PCIE 1X接口可以插4X、8X、16X的插槽上。
-![](https://github.com/ai-wen/study/blob/master/PCIE/pcie.png)
+![PCIE](https://github.com/ai-wen/study/blob/master/PCIE/pcie.png)
+
 linux驱动示例：
 ```cpp
 #include <linux/module.h>

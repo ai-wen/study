@@ -6,7 +6,7 @@
 
 ##### PCIE（PCI Express)设备
 PCIE插槽是可以向下兼容的，比如PCIE 1X接口可以插4X、8X、16X的插槽上。
-![](./pcie.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/pcie.png)
 linux驱动示例：
 ```cpp
 #include <linux/module.h>
@@ -406,31 +406,31 @@ USB各标准的速度如下：
 PCI设备的扫描是基于深度优先搜索算法（DFS：Depth First Search)，也就是说，下级分支最多的PCI桥将最先完成其子设备的扫描。下面我们以图片来具体说明，ＢＩＯＳ是如何一步步完成PCI 设备扫描的。
 * 第一步：
 PCI Host 主桥扫描Bus 0上的设备（在一个处理器系统中，一般将与HOST主桥直接相连的PCI总线被命名为PCI Bus 0），系统首先会忽略Bus 0上的D1，D2等不会挂接PCI桥的设备，主桥发现Bridge 1后，将Bridge1 下面的PCI Bus定为 Bus 1，系统将初始化Bridge 1的配置空间，并将该桥的Primary Bus Number 和 Secondary Bus Number寄存器分别设置成0和1，以表明Bridge1 的上游总线是0，下游总线是1，由于还无法确定Bridge1下挂载设备的具体情况，系统先暂时将Subordinate Bus Number设为0xFF。如下图所示：
-![](主桥扫描Bus0.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus0.png)
 * 第二步：
 系统开始扫描Bus 1，将会发现Bridge 2。系统将Bridge 2下面的PCI Bus定为Bus 2，并将该桥的Primary Bus Number 和 Secondary Bus Number寄存器分别设置成1和2，和上一步一样暂时把Bridge 2 的Subordinate Bus Number设为0xFF。如下图所示：
-![](主桥扫描Bus1.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus1.png)
 
 * 第三步：
 系统继续扫描Bus 2，将会发现Bridge 4。系统将Bridge 4下面的PCI Bus定为Bus 3，并将该桥的Primary Bus Number 和 Secondary Bus Number寄存器分别设置成2和3，此后 系统继续扫描后发现Bus 3 下面已经没有任何Bridge了，意味着该PCI总线下已经没有任何挂载下游总线了，因此Bridge 4的Subordinate Bus Number的值已经可以确定为3了。
-![](主桥扫描Bus2.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus2.png)
 
 * 第四步：
 完成Bus 3的扫描后，系统返回到Bus 2继续扫描，发现Bus 2下面已经没有其他Bridge了。此时Bridge 2的Subordinate Bus Number的值也已经可以确定为3了。如下图所示：
-![](主桥扫描Bus3.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus3.png)
 
 * 第五步：
 完成Bus 2的扫描后，系统返回到Bus1继续扫描，会发现Bridge 3，系统将Bridge 3下面的PCI Bus定为Bus 4。并将Bridge 4的Primary Bus Number 和 Secondary Bus Number寄存器分别设置成1和4，此后系统继续扫描后发现Bus 4 下面已经没有任何Bridge了，意味着该PCI总线下已经没有挂载任何下游总线了，因此Bridge 3 的Subordinate Bus Number的值已经可以确定为4了。如下图所示：
-![](主桥扫描Bus4.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus4.png)
 
 * 第六步：
 完成Bus 4的扫描后，系统返回到Bus 1继续扫描， 发现Bus 1下面已经没有其他Bridge了。此时Bridge 1的Subordinate Bus Number的值已经可以确定为4，系统返回Bus 0继续扫描（Bus 0下如果有其他它Bridge，将重复上述的步骤进行扫描）。至此，本例中的整个PCI的设备扫描已经完成了。最终的设备和总线的扫描结果如下图所示。
-![](主桥扫描Bus完成.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/主桥扫描Bus完成.png)
 
 
 
 一般来说，我们可以通过两个寄存器来访问PCI的配置空间（寄存器CONFIG_ADDRESS与CONFIG_DATA），在x86体系下，这两个寄存器分别对应0xCF8和0xCFC端口，对配置空间的访问都是通过对这两个寄存器的读写来实现先。CONFIG_ADDRESS寄存器的具体位组成如下图所示：
-![](CONFIG_ADDRESS.png)
+![](https://github.com/ai-wen/study/blob/master/PCIE/CONFIG_ADDRESS.png)
 Bus Number : 总线号（8 bit)，范围0--255。
 Device Number: 设备号（5 bit)，范围0--31。
 Function Number: 功能号（3 bit)，范围0--7。

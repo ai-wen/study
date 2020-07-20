@@ -1603,6 +1603,39 @@ DW |    Byte3    |    Byte2    |    Byte1    |     Byte0     | Addr
 ---+---------------------------------------------------------+-----
 15 | 　Max_Lat　 | 　Min_Gnt　 | 　IRQ Pin　 | 　IRQ Line　　  |　3C
 -------------------------------------------------------------------
+
+typedef struct _PCI_CONFIG 
+{
+	USHORT			mPcVendorId;				//00H Vendor ID
+	USHORT			mPcDeviceId;				//02H Devcie ID
+	USHORT			mPcCommandReg;				//04H Command Reg
+	USHORT			mPcStatusReg;				//06H Status Reg
+	UCHAR			mPcRevisionId;				//08H Revision changing Tag
+	UCHAR			mPcProgramIf;				//09H Programming Reg Interface
+	UCHAR			mPcSubClass;				//0AH Sub Class Code
+	UCHAR			mPcBaseClass;				//0BH Base Class Code
+	UCHAR			mPcCacheLine;				//0CH Cache Line length
+	UCHAR			mPcLatenTimer;				//0DH Latency Timer Reg
+	UCHAR			mPcHeaderType;				//0EH Header Type
+	UCHAR			mPcBistReg;					//0FH BIST Reg
+	ULONG			mPcBaseAddr0;				//10H Base Address 0
+	ULONG			mPcBaseAddr1;				//14H Base Address 1
+	ULONG			mPcBaseAddr2;				//18H Base Address 2
+	ULONG			mPcBaseAddr3;				//1CH Base Address 3
+	ULONG			mPcBaseAddr4;				//20H Base Address 4
+	ULONG           mPcBaseAddr5;				//24H Base Address 5
+	ULONG			mPcCardBusCis;				//28H
+	USHORT			mPcSubSysVen;				//2CH Subsystem Vendor ID
+	USHORT			mPcSubSysDev;				//2EH Subsystem ID
+	ULONG			mPcExpanSRom;				//30H Expansion ROM Base Addr
+	UCHAR			mPcCapPtr;					//34H 
+	UCHAR			mPcReserved1[3];			//35H
+	ULONG			mPcReserved2;				//38H
+	UCHAR			mPcInterLine;				//3CH Interrupt Line
+	UCHAR			mPcInterPin;				//3DH Interrupt Pin
+	UCHAR			mPcMinGrant;				//3EH Min_Gnt
+	UCHAR			mPcMaxLatency;				//3FH Max_lat
+} mPCI_CONFIG, *mPPCI_CONFIG;
 ```
 Vendor  ID：厂商ID。知名的设备厂商的ID。FFFFh是一个非法厂商ID，可它来判断PCI设备是否存在。
 Device  ID：设备ID。某厂商生产的设备的ID。操作系统就是凭着 Vendor ID和Device ID 找到对应驱动程序的。

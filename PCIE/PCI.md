@@ -1393,7 +1393,7 @@ NTSTATUS DEMOPciReadBaseUlong( PDEMOPCI_DEVICE_EXT pDevExt, PIRP pIrp )
 #### 七、上层应用枚举PCI设备
 * 设备打开
 ```cpp
-DEMOPCI_GUID: 参数*ClassGuid应指定成我们驱动安装时的.inf文件中Guid号
+DEMOPCI_GUID: 参数*ClassGuid
 /********************************************************************/
 /*           Open device ident=0, b--FALSE or TRUE		    */
 /********************************************************************/
@@ -1563,7 +1563,7 @@ LPOVERLAPPED lpOverlapped： 用于指定该I/O操作是异步还是同步。
 
 
 
-#### PCI配置空间 https://blog.csdn.net/tody_guo/article/details/22862709
+# PCI配置空间 https://blog.csdn.net/tody_guo/article/details/22862709
 PCI有三个相互独立的物理地址空间：设备存储器地址空间、I/O地址空间和配置空间。
 配置空间是PCI所特有的一个物理空间。由于PCI支持设备即插即用，所以PCI设备不占用固定的内存地址空间或I/O地址空间，而是由操作系统决定其映射的基址。  
 系统加电时，BIOS检测PCI总线，确定所有连接在PCI总线上的设备以及它们的配置要求，并进行系统配置。所以，所有的PCI设备必须实现配置空间，从而能够实现参数的自动配置，实现真正的即插即用。  
@@ -1622,8 +1622,16 @@ CONFIG_ADDRESS寄存器格式：
 7: 2 位：配置空间寄存器编号。
 1: 0 位：恒为“00”。
 ```
+一般来说，我们可以通过两个寄存器来访问PCI的配置空间（寄存器CONFIG_ADDRESS与CONFIG_DATA），在x86体系下，这两个寄存器分别对应0xCF8和0xCFC端口，对配置空间的访问都是通过对这两个寄存器的读写来实现先。CONFIG_ADDRESS寄存器的具体位组成如下图所示：
+![](CONFIG_ADDRESS.png)
+Bus Number : 总线号（8 bit)，范围0--255。
+Device Number: 设备号（5 bit)，范围0--31。
+Function Number: 功能号（3 bit)，范围0--7。
+Register Number: 寄存器号（6 bit),范围0--63 （配置空间一共256个字节，分割成64个4字节的寄存器，从0--63编号）。
 
-#### PCI应用层、驱动层和设备层通信 https://blog.csdn.net/Sagittarius_Warrior/article/details/51158791
+每个PCI设备可根据上图所示的四个信息：Bus Number, Device Number, Function Number，Register Number 来进行具体设备的定位并对其配置空间访问。当我们要访问PCI设备的配置空间时，先根据以上格式设置CONFIG_ADDRESS寄存器，然后再读取CONFIG_DATA寄存器即可得到相应的配置空间寄存器的值。
+
+# PCI应用层、驱动层和设备层通信 https://blog.csdn.net/Sagittarius_Warrior/article/details/51158791
 一个简单的单一设备PCIE驱动程序和设备的通信协议，从上到下大致分为三层：应用层、驱动层和设备层。  
 应用层和驱动层通过系统总线（win32 API调用）实现通信，  
 驱动层和设备层通过PCI总线（地址空间映射）进行通信。  

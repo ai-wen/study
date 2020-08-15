@@ -1,3 +1,7 @@
+^\s*\n              匹配空行 
+^微信号.*\n         匹配字符串开头的1行
+^微信号.*\n.*\n     匹配字符串开头的2行
+
 # ![深入理解log机制](http://feihu.me/blog/2014/insight-into-log/) 
 http://feihu.me/blog/2014/insight-into-log/   
 # Git

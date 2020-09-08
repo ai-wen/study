@@ -1,0 +1,119 @@
+
+
+MKDIR        = mkdir -p
+RM           = rm -f
+CP           = cp -fp
+ECHO         = echo
+FIND         = find
+MV           = mv -f
+LN           = ln -s
+MAKE		 = make -f 
+ARFLAGS      = rv
+STRIP        = strip
+
+export CROSS =   
+CC = $(CROSS)gcc
+CXX = $(CROSS)g++ 
+LD           = $(CROSS)ld
+AR           = $(CROSS)ar
+CFLAGS		 = -fPIC -shared
+
+
+#使用pcsclite与smartcard通信
+#安装以下库
+#libccid pcscd libdbus-1-dev libpcsclite-dev
+
+LINKFLAGS	 = -Wl,--retain-symbols-file=export.sym -Wl,--version-script=export.map  -Wl,--whole-archive -lgm_api_pcsc -Wl,--no-whole-archive -lgm_api_pcsc  -lapdu -lpolarssl -lmk_lib -los -ldevmgr_pcsc -lpcsclite -lrt -lpthread -lstdc++ -ldl
+
+ifeq (1,$(UI))
+    LINKFLAGS = -Wl,--retain-symbols-file=export.sym -Wl,--version-script=export.map  -Wl,--whole-archive -lgm_api_pcsc -Wl,--no-whole-archive -lgm_api_pcsc  -lapdu -lpolarssl -lmk_lib -los -ldevmgr_pcsc -lpcsclite -lVerifyFingerUI -lpthread -lX11 -lrt -lpthread -lstdc++ -ldl
+	UI = 1
+else
+	UI = 0
+endif
+
+ARCH = $(shell getconf LONG_BIT)
+
+export PRJ_HOME=$(pwd)../..
+
+LIBSMAIN  +=  -L. -L$(CURDIR)
+			
+MAIN	= libgm3000pcsc.1.0.so
+
+
+ifeq (64,$(ARCH))
+	
+all: 
+	#$(ECHO) "x64"
+	#$(CP) libusb/x64/libusb-1.0.a  ./libusb-1.0.a
+	test -d $(CURDIR)/libx64/release || mkdir -p $(CURDIR)/libx64/release	
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile  DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile  DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile  DEBUG=0	
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile  DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc  DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc  DEBUG=0
+	$(CC)	$^$(CFLAGS)	$(LIBSMAIN)	$(LINKFLAGS)	$(LINKSYS)	-o	$(MAIN)
+	$(STRIP) $(MAIN)
+	$(CP) $(MAIN) $(CURDIR)/libx64/release
+	
+debug: 
+	#$(CP) libusb/x64/libusb-1.0.a-d  ./libusb-1.0.a
+	test -d $(CURDIR)/libx64/debug || mkdir -p $(CURDIR)/libx64/debug
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile  DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile  DEBUG=1	
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile  DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc  DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc  DEBUG=1
+	$(CC)	$^$(CFLAGS)	-g	-D_DEBUG	$(LIBSMAIN)	$(LINKFLAGS)	$(LINKSYS)	-o	$(MAIN)
+	$(CP) $(MAIN) $(CURDIR)/libx64/debug
+	
+clean:	
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile clean 
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile clean	
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc clean
+	
+else    
+
+all: 
+	#$(ECHO) "x86"
+	#$(CP) libusb/x86/libusb-1.0.a  ./libusb-1.0.a
+	test -d $(CURDIR)/libx86/release || mkdir -p $(CURDIR)/libx86/release
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile OFFSET=-m32 DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile OFFSET=-m32 DEBUG=0	
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile OFFSET=-m32 DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile OFFSET=-m32 DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc OFFSET=-m32 DEBUG=0
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc OFFSET=-m32 DEBUG=0 UI=$(UI)
+	#$(MAKE) $(PRJ_HOME)/libVerifyFingerUI/makefile	 OFFSET=-m32 DEBUG=0
+	$(CC)	$^$(CFLAGS)	$(LIBSMAIN)	$(LINKFLAGS)	$(LINKSYS)	-o	$(MAIN)
+	$(STRIP) $(MAIN)
+	$(CP) $(MAIN) $(CURDIR)/libx86/release
+	
+
+debug: 
+	#$(CP) libusb/x86/libusb-1.0.a-d  ./libusb-1.0.a
+	test -d $(CURDIR)/libx86/debug || mkdir -p $(CURDIR)/libx86/debug
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile OFFSET=-m32 DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile OFFSET=-m32 DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile OFFSET=-m32 DEBUG=1	
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile OFFSET=-m32 DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc OFFSET=-m32 DEBUG=1
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc OFFSET=-m32 DEBUG=1  UI=$(UI)
+	$(CC)	$^$(CFLAGS)	-g	-D_DEBUG	$(LIBSMAIN)	$(LINKFLAGS)	$(LINKSYS)	-o	$(MAIN)
+	$(CP) $(MAIN) $(CURDIR)/libx86/debug
+	
+clean:
+	$(MAKE) $(PRJ_HOME)/prj_linux/mk_lib/makefile clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/apdu/makefile clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/polarssl/makefile clean	
+	$(MAKE) $(PRJ_HOME)/prj_linux/os/makefile clean
+	$(MAKE) $(PRJ_HOME)/prj_linux/devmgr/makefile_pcsc clean	
+	$(MAKE) $(PRJ_HOME)/prj_linux/k3gm/makefile_gm3000_pcsc clean
+
+	
+endif

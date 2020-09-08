@@ -1,6 +1,37 @@
+# 正则
 ^\s*\n              匹配空行   
 ^微信号.*\n         匹配字符串开头的1行  
 ^微信号.*\n.*\n     匹配字符串开头的2行  
+
+# 编译脚本 ![编译脚本](编译脚本)
+```cpp
+#--retain-symbols-file控制静态符号表.symtab;
+#--version-script控制动态符号表.dynsym;
+#-Wl,--soname='libusb.so.1'
+#-lssl -lcrypto
+
+#动态库的命名格式是libbar.so.x.y.z，最后一个z版本的变动一定是兼容的。y版本升级一般向前兼容。所以这个y和z不能写死。x版本变动一般是不兼容升级。
+#realname 	libusb.1.0.so.1.0.0		库文件真正的实体
+#soname		libusb.1.0.so.1			库文件被系统加载后的标识名，是ldd查看时真正的					
+#linkname	libusb.1.0.so
+
+#readelf -d 	查看库的soname
+#ldconfig -n  dir 将dir目录下的库文件缓存在系统环境变量LD_LIBRARY_PATH，并自动生成对应的soname文件
+#ldconfig -l libusb.1.0.so.1.0.0				自动生成soname文件
+#ln -s libusb.1.0.so.1  libusb.1.0.so		生成linkname文件
+
+
+#libusb-1.0.23编译
+#./configure --host=运行平台 --build=编译平台  --target=目标平台
+#./configure CFLAGS="-fPIC -g" --prefix=./bin --enable-static --disable-udev --host=mips64el-linux --build=mips64el-linux --target=mips64el-linux  
+
+#openssl-1.1.1d编译
+#AES、MD5、RSA、SHA no-sm3 no-idea no-sm4 no-ec no-dsa no-sm2
+./config no-asm no-aria no-async no-blake2 no-cast no-chacha no-cms no-comp no-ct no-dso no-engine no-err no-md2 no-md4 no-mdc2 no-poly1305 no-rc2 no-rc4 no-rc5 no-ripemd no-seed  no-ts no-srp no-ui  no-siphash no-bf no-camellia no-ocsp  no-cmac  no-hw no-pic no-egd no-zlib  no-sse2  no-rfc3779 no-ssl no-ssl2 no-ssl3 no-tls no-unit-test no-tests no-sock  --prefix=./../lib/linux/x64		
+make build_libs
+make install
+
+```
 
 # ![深入理解log机制](http://feihu.me/blog/2014/insight-into-log/) 
 http://feihu.me/blog/2014/insight-into-log/   

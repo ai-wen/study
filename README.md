@@ -1,3 +1,15 @@
+# host git
+https://www.ipaddress.com/
+
+140.82.113.3  github.com
+199.232.69.194 github.global.ssl.fastly.net
+140.82.113.3 codeload.github.com
+
+C:\Windows\System32\drivers\etc\hosts 
+
+ipconfig /flushdns
+
+
 # 正则
 ^\s*\n              匹配空行   
 ^微信号.*\n         匹配字符串开头的1行  

@@ -224,7 +224,7 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=.../vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windo
 ## [示例](https://github.com/OpenVPN/openvpn3#openvpn-3-client-api)
 https://github.com/OpenVPN/openvpn3
 
-vcpkg install openssl-windows:x64-windows asio:x64-windows tap-windows6:x64-windows lz4:x64-windows gtest:x64-windows
+./vcpkg install openssl-windows:x64-windows asio:x64-windows tap-windows6:x64-windows lz4:x64-windows gtest:x64-windows
 
 git clone https://github.com/OpenVPN/openvpn3.git
 cmake -DCMAKE_TOOLCHAIN_FILE=G:\vcpkg\scripts\buildsystems\vcpkg.cmake -A x64 -B build openvpn3
@@ -235,8 +235,7 @@ cmake --build build --config Release --target ovpncli
 cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_TOOLCHAIN_FILE=G:\vcpkg\scripts\buildsystems\vcpkg.cmake -A x64 -B build openvpn3
 
 
-vcpkg install openssl-windows:x86-windows asio:x86-windows tap-windows6:x86-windows lz4:x86-windows gtest:x86-windows
-
-vcpkg install openssl-windows:x86-windows  openssl-windows:x86-windows-static  openssl-windows:x64-windows openssl-windows:x64-windows-static 
-vcpkg install opencv:x86-windows  opencv:x86-windows-static  opencv:x64-windows opencv:x64-windows-static 
-vcpkg install jsoncpp:x86-windows  jsoncpp:x86-windows-static  jsoncpp:x64-windows jsoncpp:x64-windows-static 
+./vcpkg install openssl-windows:x86-windows asio:x86-windows tap-windows6:x86-windows lz4:x86-windows gtest:x86-windows
+./vcpkg install openssl-windows:x86-windows  openssl-windows:x86-windows-static  openssl-windows:x64-windows openssl-windows:x64-windows-static 
+./vcpkg install opencv:x86-windows  opencv:x86-windows-static  opencv:x64-windows opencv:x64-windows-static 
+./vcpkg install jsoncpp:x86-windows  jsoncpp:x86-windows-static  jsoncpp:x64-windows jsoncpp:x64-windows-static 

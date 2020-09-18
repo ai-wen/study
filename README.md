@@ -1,13 +1,18 @@
+# [图说设计模式](https://design-patterns.readthedocs.io/zh_CN/latest/index.html)
+[git design_patterns](https://github.com/me115/design_patterns)
+
+# [很好的密码学源码](https://www.oryx-embedded.com/products/CycloneTCP)
+
 # host git
 https://www.ipaddress.com/
 
-140.82.113.3  github.com
-199.232.69.194 github.global.ssl.fastly.net
-140.82.113.3 codeload.github.com
+140.82.113.3  github.com  
+199.232.69.194 github.global.ssl.fastly.net  
+140.82.113.3 codeload.github.com  
 
-C:\Windows\System32\drivers\etc\hosts 
+C:\Windows\System32\drivers\etc\hosts   
 
-ipconfig /flushdns
+ipconfig /flushdns  
 
 
 # 正则

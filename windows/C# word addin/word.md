@@ -2,6 +2,18 @@ https://blog.csdn.net/weixin_30911809/article/details/98676870
 1. VSTO是什么？我们可以用VSTO做什么？
 VSTO全称Visual Studio Tool for Office,是可以让我们针对现有的Office程序进行功能扩展。在工作或生活中其实我们或多或少用到过VSTO插件，例如安装有道词典/Adobe Pro会在Office程序中嵌入插件程序。
 
+
+【安装卸载问题】
+安装只需要运行 xxx.vsto即可
+卸载一般只要在控制面板卸载即可
+当更换了目录后重新安装失败，可能是HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\PackageMetadata
+注册表项下还有与安装装程序相关的注册项一并删除即可重新安装。
+[HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\PackageMetadata\{2ec93463-b0c3-45e1-8364-327e96aea856}_{3f471841-eef2-47d6-89c0-d028f03a4ad5}\gps.vsto_9ad7a082e0a2c414_0001.0000_138e6fc3fa62eef5]
+[HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\PackageMetadata\{2ec93463-b0c3-45e1-8364-327e96aea856}_{3f471841-eef2-47d6-89c0-d028f03a4ad5}\gps.vsto_9ad7a082e0a2c414_24259efe263a9ace]
+[HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\PackageMetadata\{2ec93463-b0c3-45e1-8364-327e96aea856}_{3f471841-eef2-47d6-89c0-d028f03a4ad5}\skfg..vsto_636f6e3a1801aa1d_0001.0000_fdf545abb064bc8c]
+[HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\PackageMetadata\{2ec93463-b0c3-45e1-8364-327e96aea856}_{3f471841-eef2-47d6-89c0-d028f03a4ad5}\skfg..vsto_636f6e3a1801aa1d_dc354f5577da1f29]
+
+ClickOnce应用程序卸载删除 重新安装问题
 Microsoft.VisualStudio.Tools.Applications.Deployment.AddInAlreadyInstalledException: The customization cannot be installed because another version is currently installed and cannot be upgraded from this location. To install this version of the customization, first use Add or Remove Programs to uninstall this program: gps. Then install the new customization from the following location: file:///G:/Debug/gps.vsto
 
 上述异常需要删除下面这条注册项
@@ -10,6 +22,9 @@ HKEY_CURRENT_USER\Software\Microsoft\VSTO
 
 HKEY_CLASSES_ROOT\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\Components\gps.vsto
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall
+
+
+
 
 插件(AddIn)，实际上是一个组件（COM），插件安装到系统后，会在Office的对应目录HKEY_CURRENT_USER\Software\Microsoft\Office\Word\Addins（以WORD为例）上标记此插件的名称，加载方式等，而在组件注册的过程中此插件的的执行程序的全路径也会在注册表中标记，按照插件ID在注册表中查找，就可以找到这些注册表项。其实用VS.NET来开发Office插件，是不需要关心这些问题的，因为在建立插件项目的同时，会建立一个此插件项目的安装项目，用此安装项目就可以自动执行在注册表中添加这些项目。
 LoadBehavior：3 代表了启动时自动加载。具体请参考： https://msdn.microsoft.com/en-us/library/bb386106.aspx 中Load Behavior

@@ -25,8 +25,9 @@ apt install libxklavier-dev
 
 
 
-
-
+wmctrl
+main.c:36:29: fatal error: X11/Xmu/WinUtil.h: No such file or directory
+apt-get install libxmu-dev
 
 
 

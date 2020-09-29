@@ -215,9 +215,34 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=.../vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windo
 
 
 
+//修改git 下载包路径--------------------------------------------------
+D:\vcpkg\ports\brotli\portfile.cmake
 
+vcpkg_from_github(
+    OUT_SOURCE_PATH <SOURCE_PATH>
+    REPO <Microsoft/cpprestsdk>
+    [REF <v2.0.0>]
+    [SHA512 <45d0d7f8cc350...>]
+    [HEAD_REF <master>]
+    [PATCHES <patch1.patch> <patch2.patch>...]
+    [GITHUB_HOST <https://github.com>]
+    [AUTHORIZATION_TOKEN <${SECRET_FROM_FILE}>]
+)
 
-
+vcpkg_from_github(
+    OUT_SOURCE_PATH SOURCE_PATH
+    REPO google/brotli
+    REF v1.0.7
+    SHA512 a82362aa36d2f2094bca0b2808d9de0d57291fb3a4c29d7c0ca0a37e73087ec5ac4df299c8c363e61106fccf2fe7f58b5cf76eb97729e2696058ef43b1d3930a
+    HEAD_REF master
+    PATCHES
+        install.patch
+        fix-arm-uwp.patch
+        pkgconfig.patch
+    
+  GITHUB_HOST https://hub.fastgit.org
+)
+//-------------------------------------------
 
 
 

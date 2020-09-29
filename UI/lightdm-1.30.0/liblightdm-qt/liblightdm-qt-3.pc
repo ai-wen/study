@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: liblightdm-qt
+Description: LightDM Qt4 client library
+Version: 1.30.0
+Requires: QtCore QtGui
+Libs: -L${libdir} -llightdm-qt-3
+Cflags: -I${includedir}/lightdm-qt-3

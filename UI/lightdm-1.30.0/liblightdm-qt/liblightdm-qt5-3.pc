@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: liblightdm-qt5
+Description: LightDM Qt5 client library
+Version: 1.30.0
+Requires: Qt5Core Qt5Gui
+Libs: -L${libdir} -llightdm-qt5-3
+Cflags: -I${includedir}/lightdm-qt5-3

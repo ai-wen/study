@@ -1,0 +1,3 @@
+	../data/org.freedesktop.DisplayManager.AccountsService.policy.in \
+	../src/lightdm.c \
+	../src/dm-tool.c

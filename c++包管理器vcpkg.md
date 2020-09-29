@@ -214,8 +214,8 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=.../vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windo
 
 
 
-
-//修改git 下载包路径--------------------------------------------------
+```cpp
+//修改git 下载包路径
 D:\vcpkg\ports\brotli\portfile.cmake
 
 vcpkg_from_github(
@@ -242,7 +242,7 @@ vcpkg_from_github(
     
   GITHUB_HOST https://hub.fastgit.org
 )
-//-------------------------------------------
+```
 
 
 

@@ -1,0 +1,3 @@
+ldm
+**/*.o
+massif.out.*

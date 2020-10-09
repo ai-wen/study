@@ -1,4 +1,19 @@
 [Wayland](https://wiki.archlinux.org/index.php/Wayland_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))  
+显示管理器
+下面列出的显示管理器均支持 Wayland 混成器。“类型”列指明了显示管理器是否支持在 Wayland 上运行。
+
+|名称|类型|描述|
+|--|--|--|	            
+|GDM|	    在 Wayland 上运行	|GNOME 的显示管理器。|
+|greetd	|登录守护程序	  |  小巧且灵活的登录守护程序。|
+|LightDM|	在 X11 上运行|	    跨桌面显示管理器。|
+|Ly	    |在控制台中运行	 |    用 C 语言编写的 TUI 显示管理器。|
+|SDDM	|在 X11 上	    |    基于 QML 开发的显示管理器。|
+|tbsm	|在控制台中运行|	     用纯 Bash 编写的简单 CLI 会话启动器。|
+
+
+[Wayland 简介](https://blog.csdn.net/basilc/article/details/8071596)  
+[Wayland 架构](https://blog.csdn.net/basilc/article/details/8074837)  
 Wayland 是一个开源项目，旨在创建 Linux 下新型的显示服务器架构（displayserver architecture），由任职于 Intel 的Kristian Høgsberg 在 2008 年发起（发起时任职于 Red Hat），目前已经接近发布 1.0 版（现在已经发布了 0.99 版）。
 
 Wayland 的目标是替代 X，提供一个简单、高效、轻量的，符合现代桌面要求的显示服务器架构。现代桌面的一个重要特征即窗口的合成（compositing）。Wayland 即通过合成器（Compositor）来直接与应用程序和视频硬件通信，并转发事件给它们。这其中，应用程序渲染图形到应用程序的缓冲（buffers）中，然后合成器即显示服务器合成这些图形并显示在屏幕上（就是应用程序的窗口）。合成器的概念会在下一节进行简单介绍。

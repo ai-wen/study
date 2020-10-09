@@ -1,0 +1,10 @@
+[Unit]
+Description=Lean Display Manager
+Conflicts=getty@tty1.service
+After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service systemd-logind.service
+
+[Service]
+ExecStart=/usr/bin/ldm
+
+[Install]
+Alias=ldm.service

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=ldm
+Comment=Lean Display Manager
+Exec=/usr/bin/ldm
+TryExec=/usr/bin/ldm
+Type=Application

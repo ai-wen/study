@@ -1,0 +1,10 @@
+[Unit]
+Description=Thin Client Display Manager
+After=systemd-user-sessions.service
+
+[Service]
+ExecStart=/usr/bin/tcdm -c /etc/tcdm/tcdm.conf
+KillSignal=SIGKILL
+
+[Install]
+Alias=display-manager.service

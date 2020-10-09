@@ -1,0 +1,21 @@
+
+window {
+ background: url('/etc/tcdm/mount_fuji.jpg');
+}
+
+#box2 {
+  background-color: grey;
+  border-radius: 15px;
+  opacity: 0.5;
+  font-size: 20px;
+}
+
+.input {
+  font-size: 16px;
+}
+
+.label, .status {
+  color: white;
+  font-size: 16px;
+}
+

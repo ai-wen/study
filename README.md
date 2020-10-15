@@ -1,5 +1,8 @@
 # [git备份镜像站](https://hub.fastgit.org/)
 
+# [国标文档查询](http://www.gmbz.org.cn/main/bzlb.html)
+# [GM/T 0024-2014 SSL VPN 技术规范](http://www.gmbz.org.cn/main/viewfile/20180110021416665180.html)
+
 # [windbg调试命令](https://docs.microsoft.com/zh-cn/windows-hardware/drivers/debugger/getting-started-with-windbg)
 
 # [图说设计模式](https://design-patterns.readthedocs.io/zh_CN/latest/index.html)

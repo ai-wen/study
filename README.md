@@ -1,5 +1,8 @@
 # [git备份镜像站](https://hub.fastgit.org/)
 
+# gcc -E -I. circle.c -o circle.i  预处理删除注释
+# gcc -E -C -I. circle.c -o circle.c 预处理不删除注释
+
 # [国标文档查询](http://www.gmbz.org.cn/main/bzlb.html)
 # [GM/T 0024-2014 SSL VPN 技术规范](http://www.gmbz.org.cn/main/viewfile/20180110021416665180.html)
 

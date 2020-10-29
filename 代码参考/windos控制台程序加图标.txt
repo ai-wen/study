@@ -1,0 +1,5 @@
+#define IDC_MANIFRAME                   101
+
+添加资源文件
+插入ICON图片资源
+将ICON图片资源ID 修改成 IDC_MANIFRAME

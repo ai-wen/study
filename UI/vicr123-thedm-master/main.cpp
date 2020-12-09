@@ -31,13 +31,15 @@ void openWindows() {
 
 int main(int argc, char *argv[])
 {
-    qputenv("XDG_SESSION_CLASS", "greeter");
+    qputenv("XDG_SESSION_CLASS", "greeter"); //Qt设置环境变量_penghuilater的博客-CSDN博客
     qputenv("QT_QPA_PLATFORMTHEME", "ts");
     QProcess* XServerProcess = NULL;
 
-    if (argc > 1) {
+    if (argc > 1)
+    {
         QString firstArg = argv[1];
-        if (firstArg == "--help" || firstArg == "-h") {
+        if (firstArg == "--help" || firstArg == "-h")
+        {
             std::cout << "theDM Display Manager\n";
             std::cout << "Usage: thedm [vtx|--help]\n";
             std::cout << "       vtx: The virtual terminal to start the X server on, in the form of vtx.\n";
@@ -51,12 +53,16 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (qgetenv("DISPLAY") == "") {
+    if (qgetenv("DISPLAY") == "")
+    {
         //Start the X server
         QString currentVt = "";
-        if (argc > 1) {
+
+        if (argc > 1)
+        {
             QString firstArg = argv[1];
-            if (firstArg.contains("vt")) {
+            if (firstArg.contains("vt"))
+            {
                 currentVt = firstArg;
 
                 //Switch to the required VT
@@ -68,17 +74,19 @@ int main(int argc, char *argv[])
             }
         }
 
-        if (currentVt == "") {
+        if (currentVt == "")
+        {
             QProcess vtGet;
             vtGet.start("fgconsole");
             vtGet.waitForFinished();
-            currentVt = "vt" + QString(vtGet.readAll());
+            currentVt = "vt" + QString(vtGet.readAll()); //Linux fgconsole命令显示活动的虚拟终端数量-Linux实验室
         }
 
         bool serverStarted = false;
         int display = 0;
         do {
             qDebug() << QString("Starting the X Server as display :" + QString::number(display) + " on " + currentVt).toStdString().data();
+
             XServerProcess = new QProcess();
             XServerProcess->setProcessChannelMode(QProcess::ForwardedChannels);
             XServerProcess->start("/usr/bin/X :" + QString::number(display) + " " + currentVt);

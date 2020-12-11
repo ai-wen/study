@@ -24,6 +24,14 @@ C:\Windows\System32\drivers\etc\hosts
 
 ipconfig /flushdns  
 
+# OpenSC
+[windows 编译](https://github.com/OpenSC/OpenSC/wiki/Compiling-on-Windows)
+[windows 安装](https://github.com/OpenSC/OpenSC/wiki/Windows-Quick-Start)
+OpenSC PKCS#11 module: PKCS#11 module usd by most open source and cross-platform software (like Firefox, Putty, TrueCrypt, OpenVPN etc)  
+PKCS#11 Spy module: Module of the PKCS#11 spy.  
+OpenSC minidriver: OpenSC minidriver for using smart cards with native Windows CSP applications (like Internet Explorer)  
+Tools and profiles: Tools for debugging and personalization. Includes profiles needed for running pkcs15-init.exe  
+Start menu entries: Start menu entries: link to documentation  
 
 # 正则
 ^\s*\n              匹配空行   

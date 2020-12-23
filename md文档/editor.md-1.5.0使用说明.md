@@ -7,7 +7,21 @@
 2. 启用emoji表情
     参考python代码，下载表情：
     参考测试页面,创建 editormd对象时设置：emoji            : true, 
-    修改 editormd.min.js 中表情包路径  t.emoji={path:"editor.md-1.5.0/emoji/emoji/",ext:".png"},t.twemoji={path:"editor.md-1.5.0/emoji/twemoji/"
+    修改 editormd.amd.js editormd.amd.min.js editormd.js  editormd.min.js 中表情包路径
+    ```
+    editormd.emoji     = {
+        path  : "http://www.emoji-cheat-sheet.com/graphics/emojis/", 修改为 editor.md-1.5.0/emoji/emoji/
+        ext   : ".png"
+    };
+    // Twitter Emoji (Twemoji)  graphics files url path    
+    editormd.twemoji = {
+        path : "http://twemoji.maxcdn.com/36x36/",修改为 editor.md-1.5.0/emoji/twemoji/
+        ext  : ".png"
+    };
+    t.emoji={path:"editor.md-1.5.0/emoji/emoji/",ext:".png"},t.twemoji={path:"editor.md-1.5.0/emoji/twemoji/"
+    ```
+     
+    
 3. 目录组织结构
 ├─index.html---------------测试页面
 └─editor.md-1.5.0----------源码包

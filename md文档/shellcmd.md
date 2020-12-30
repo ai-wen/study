@@ -73,3 +73,27 @@ valgrind --tool=callgrind ./sec_infod
 会在当前路径下生成callgrind.out.pid（当前生产的是callgrind.out.19689），如果我们想结束程序，可以：killall callgrind
 然后我们看一下结果：
 callgrind_annotate --auto=yes callgrind.out.19689   >log
+
+
+
+# awk 使用
+#printf("%s ") 注意加空格
+for libs in `ldd LMSuperTool | awk  '{if (match($3,"/")){ printf("%s "),$3 } }'`
+do   
+   so=`readlink -f $libs`
+   echo $so
+   #cp $so ./  
+done
+
+NIC=''
+for NICVAR in `cat /proc/net/dev | awk '{i++; if(i>2){print $1}}' | sed 's/^[\t]*//g' | sed 's/[:]*$//g'`
+do        
+    IPVAR=`ifconfig $NICVAR | grep "inet " | awk -F: '{print $2}' | awk '{print $1}'`            
+    if [ -z ${IPVAR} ] || [ ${IPVAR} = '127.0.0.1' ] || [ ${NICVAR} = 'n2n0' ];then
+        echo ""
+    else
+        #echo $NICVAR
+        #echo $IPVAR
+        NIC=$NICVAR
+    fi        
+done

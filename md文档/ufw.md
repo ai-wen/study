@@ -82,19 +82,49 @@ reboot
 
 
 ```cpp
+ NIC=''
+  for NICVAR in `cat /proc/net/dev | awk '{i++; if(i>2){print $1}}' | sed 's/^[\t]*//g' | sed 's/[:]*$//g'`
+  do        
+      IPVAR=`ifconfig $NICVAR | grep "inet " | awk -F: '{print $2}' | awk '{print $1}'`            
+      if [ -z ${IPVAR} ] || [ ${IPVAR} = '127.0.0.1' ] || [ ${NICVAR} = 'n2n0' ];then
+          echo ""
+      else
+          #echo $NICVAR
+          #echo $IPVAR
+          NIC=$NICVAR
+      fi        
+  done
+
+  #NIC=$( cat /proc/net/dev | awk 'BEGIN {max = 0} {if ($2+0 > max+0) {max=$2 ;content=$0} } END {print $1}' | sed 's/[:]*$//g')
+  IPADDR=`ifconfig $NIC | grep "inet " | awk -F: '{print $2}' | awk '{print $1}'`
+  NETMASK=`ifconfig $NIC | grep "inet " | awk -F: '{print $4}' | awk '{print $1}'`
+  GATEWAY=`route -n | grep $NIC | grep UG | awk '{print $2}'`
+  
+  if [ ${IPADDR} = '127.0.0.1' ];then
+      echo "静态IP不能设置为 127.0.0.1, 请联网后再配置"
+      exit 1
+  fi
+  if [ -z ${NIC} ];then
+      echo "网卡名不能为空"
+      exit 1
+  fi
+  if [ -z ${NETMASK} ];then
+      echo "掩码不能为空"
+      exit 1
+  fi
+  if [ -z ${GATEWAY} ];then
+      echo "网关不能为空"
+      exit 1
+  fi
+
+  echo "设置本机静态IP如下:"
+  echo '网卡名: '$NIC
+  echo '固定IP: '$IPADDR
+  echo '掩码:   '$NETMASK
+  echo '网关:   '$GATEWAY    
+
 
 NETCONFIG=/etc/network/interfaces
-
-NIC=$( cat /proc/net/dev | awk 'BEGIN {max = 0} {if ($2+0 > max+0) {max=$2 ;content=$0} } END {print $1}' | sed 's/[:]*$//g')
-IPADDR=`ifconfig $NIC | grep "inet " | awk -F: '{print $2}' | awk '{print $1}'`
-NETMASK=`ifconfig $NIC | grep "inet " | awk -F: '{print $4}' | awk '{print $1}'`
-GATEWAY=`route -n | grep $NIC | grep UG | awk '{print $2}'`
-
-echo $NIC
-echo $IPADDR
-echo $NETMASK
-echo $GATEWAY
-
 if [ ! -f /etc/network/interfaces.old ]
 then
     cp  $NETCONFIG /etc/network/interfaces.old
@@ -105,30 +135,17 @@ then
     HAS_NIC=`grep "iface ${NIC} inet static" $NETCONFIG | wc -l`
     if [ $HAS_NIC -lt 1 ]
     then
-      echo "auto ${NIC}" > $NETCONFIG
-      echo "iface ${NIC} inet static" >> $NETCONFIG
-      echo "address $IPADDR" >> $NETCONFIG
-      echo "netmask $NETMASK" >> $NETCONFIG
-      echo "gateway $GATEWAY" >> $NETCONFIG
+        echo "auto ${NIC}" > $NETCONFIG
+        echo "iface ${NIC} inet static" >> $NETCONFIG
+        echo "address $IPADDR" >> $NETCONFIG
+        echo "netmask $NETMASK" >> $NETCONFIG
+        echo "gateway $GATEWAY" >> $NETCONFIG
     fi
 fi
 
-
-if [ -f /etc/network/interfaces.old ]
-then
-    cp  /etc/network/interfaces.old $NETCONFIG 
-else
-    if [ -f $NETCONFIG ]
-    then
-      #HAS_NIC=`grep "iface ${NIC} inet static" $NETCONFIG | wc -l`
-      #if [ $HAS_NIC -ge 1 ]
-      #then
-      #  sed -i '/\"auto ${NIC}\"/,+4d' $NETCONFIG
-      #fi
-      echo "auto ${NIC}" > $NETCONFIG
-      echo "iface ${NIC} inet loopback" >> $NETCONFIG
-    fi
-fi
+echo "----------当前文件服务器静态IP配置如下----------"
+cat  $NETCONFIG
+echo ""
 
 
 reboot 

@@ -13,7 +13,8 @@
 
 @interface OTPOC : NSObject
 
--(NSString*) getotp:(int)ty argkey:(NSString*)seckey;
+-(NSString*) getotp:(int)ty alg:(int)halg c:(int64_t)mf d:(int)digist argkey:(NSString*)seckey;
+//参数标示必须小写 alg： c: d: argkey
 
 @end
 

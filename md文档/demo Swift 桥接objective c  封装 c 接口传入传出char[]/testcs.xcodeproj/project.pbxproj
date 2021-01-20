@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		045C193325B693B200FC2237 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045C193225B693B200FC2237 /* main.swift */; };
-		045C194125B6A15B00FC2237 /* otpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 045C193F25B6A15B00FC2237 /* otpc.c */; };
 		045C194325B6A1D200FC2237 /* otpm.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C194225B6A1D200FC2237 /* otpm.m */; };
+		045C195425B6E56400FC2237 /* libmotp-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C195325B6E56400FC2237 /* libmotp-static.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,11 +27,11 @@
 /* Begin PBXFileReference section */
 		045C192F25B693B200FC2237 /* testcs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testcs; sourceTree = BUILT_PRODUCTS_DIR; };
 		045C193225B693B200FC2237 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		045C193F25B6A15B00FC2237 /* otpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = otpc.c; sourceTree = "<group>"; };
-		045C194025B6A15B00FC2237 /* otpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = otpc.h; sourceTree = "<group>"; };
 		045C194225B6A1D200FC2237 /* otpm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = otpm.m; sourceTree = "<group>"; };
 		045C194F25B6B6EC00FC2237 /* testcs-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "testcs-Bridging-Header.h"; sourceTree = "<group>"; };
 		045C195025B6B9F100FC2237 /* otpm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = otpm.h; sourceTree = "<group>"; };
+		045C195125B6E37000FC2237 /* motpdll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = motpdll.h; sourceTree = "<group>"; };
+		045C195325B6E56400FC2237 /* libmotp-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmotp-static.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045C195425B6E56400FC2237 /* libmotp-static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,13 +49,13 @@
 		045C192625B693B200FC2237 = {
 			isa = PBXGroup;
 			children = (
+				045C195125B6E37000FC2237 /* motpdll.h */,
 				045C194F25B6B6EC00FC2237 /* testcs-Bridging-Header.h */,
 				045C194225B6A1D200FC2237 /* otpm.m */,
 				045C195025B6B9F100FC2237 /* otpm.h */,
-				045C193F25B6A15B00FC2237 /* otpc.c */,
-				045C194025B6A15B00FC2237 /* otpc.h */,
 				045C193125B693B200FC2237 /* testcs */,
 				045C193025B693B200FC2237 /* Products */,
+				045C195225B6E56300FC2237 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +73,14 @@
 				045C193225B693B200FC2237 /* main.swift */,
 			);
 			path = testcs;
+			sourceTree = "<group>";
+		};
+		045C195225B6E56300FC2237 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				045C195325B6E56400FC2237 /* libmotp-static.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +145,6 @@
 			files = (
 				045C193325B693B200FC2237 /* main.swift in Sources */,
 				045C194325B6A1D200FC2237 /* otpm.m in Sources */,
-				045C194125B6A15B00FC2237 /* otpc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +247,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4M7RX53G2N;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "testcs-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -252,6 +264,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4M7RX53G2N;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "testcs-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -277,6 +293,7 @@
 				045C193825B693B200FC2237 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

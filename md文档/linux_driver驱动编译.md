@@ -77,6 +77,8 @@ modprobe uio
 modprobe则可以一次将有依赖关系的驱动全部加载到内核。此驱动模块需要在编译内核的时候安装到内核目录。
 
 8. 查看驱动信息
+lsmod
+
 modinfo xx.ko
 modinfo tsr-drv.ko
 filename:       /home/lm/DLL/tsr-sdk-V2.0/driver/tsr-drv.ko

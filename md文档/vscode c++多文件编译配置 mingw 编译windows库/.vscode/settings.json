@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "os_heap.h": "c",
+        "product_defs.h": "c"
+    }
+}

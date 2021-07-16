@@ -3,15 +3,18 @@
 # set path=%path%;D:\mingw32\bin;
 # set path=%path%;D:\mingw64\bin;
 
+#g++ -static .\main.cpp .\libEnkyCT64.a -lsetupapi -lhid -o test64.exe
+#g++ -m32 -static .\main.cpp .\libEnkyCT32.a -lsetupapi -lhid -o test32.exe
+
 #OFFSET		 = -m32
-CC           = g++
+CC           = gcc
 RM           = del
 AR           = ar rcs 
 DEBUG        = 
 
 
-SMARTTIME_APP=D:/Git/test/mingw/smart/LXY-1212-0021-Interface/EnkyCTApp
-PRJ_HOME_X3=D:/Git/test/mingw/smart/SmartX3_platform/code
+#SMARTTIME_APP=D:/Git/test/mingw/smart/LXY-1212-0021-Interface/EnkyCTApp
+#PRJ_HOME_X3=D:/Git/test/mingw/smart/SmartX3_platform/code
 
 
 ifeq (1,$(DEBUG))
@@ -152,7 +155,7 @@ all: D:/Git/test/mingw/smart/LXY-1212-0021-Interface/EnkyCTApp/SmartTimeApp/arit
 #	 $(CC) $(CFLAGS_SO) $(OBJSMAIN) $(LINKFLAGS) -o $(MAINDLL)  
 	 $(RM) $(MAIN)
 	 $(AR) $(MAIN) $(OBJSMAIN)
-#	 g++ $(OFFSET) .\main.cpp .\libEnkyCT.a -lstdc++ -lhid -lsetupapi -o test.exe
+#	 g++ -static $(OFFSET) .\main.cpp $(MAIN) -lstdc++ -lhid -lsetupapi -o test.exe
 
 
 # Clean the directory to pre-build state.

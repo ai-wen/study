@@ -33,3 +33,10 @@ i686-win32-dwarf
 # 实践发现，gcc/g++ 不同的mingw版本编译出来的静态库不能混用，异常处理机制一致的才能编译成功
 
 
+在C++中有 try..throw..catch，当它执行这种结构时，它需要保存现场还原现场，而 sjlj, seh, dwarf 正是实现这类过程的三种方式。
+sjlj 全称是 SetJump LongJump，前者设还原点，后者跳到还原点。
+seh 是 Borland 公司的，微软买了其专利使用权，它利用了FS段寄存器，将还原点压入，收到异常时弹出。
+相较而言，sjlj 是 C 标准库就有的东西，seh 在 2014 年前是有专利的，从性能上说 seh 比 sjlj 快。
+
+dwarf 我是在开源平台 MinGW 见到这名称，因为专利原因 MinGW 以前并不支持 seh，也许是为了保证性能，它又提供了 dwarf 这种方式。
+

@@ -6,8 +6,9 @@
 #g++ -static .\main.cpp .\libEnkyCT64.a -lsetupapi -lhid -o test64.exe
 #g++ -m32 -static .\main.cpp .\libEnkyCT32.a -lsetupapi -lhid -o test32.exe
 
-#OFFSET		 = -m32
-CC           = gcc
+EXTERN		=
+OFFSET		 = 
+CC           = g++
 RM           = del
 AR           = ar rcs 
 DEBUG        = 
@@ -38,8 +39,9 @@ CINCLUDE    += -I. \
 		-ID:/Git/test/mingw/smart/SmartX3_platform/code/smart_manufacture \
 		-ID:/Git/test/mingw/smart/SmartX3_platform/code/smart_x3_app \
 
-LINKFLAGS   += -lhid -lsetupapi -lstdc++
+LINKFLAGS   += -lhid -lsetupapi
 
+# -Wl,-Bstatic -lgcc_s -lstdc++
 CFLAGS	     = -fPIC -O2  $(OFFSET) 
 
 ifeq ($(CC),g++)
@@ -48,15 +50,15 @@ endif
 
 CFLAGS_SO    = $(CFLAGS) -shared -Wall -Wno-unused  
 
-MAIN    = libEnkyCT32.a
-MAINDLL    = libEnkyCT32.dll
+MAIN    = libEnkyCT32_$(EXTERN).a
+MAINDLL    = libEnkyCT32_$(EXTERN).dll
 
 ifneq ($(OFFSET),-m32)
-    MAIN = libEnkyCT64.a
-	MAINDLL    = libEnkyCT64.dll
-#	CFLAGS_SO += -Wl,--out-implib,libEnkyCT64.lib 
+    MAIN = libEnkyCT64_$(EXTERN).a
+	MAINDLL    = libEnkyCT64_$(EXTERN).dll
+#	CFLAGS_SO += -Wl,--out-implib,libEnkyCT64_$(EXTERN).lib 
 else
-#	CFLAGS_SO += -Wl,--out-implib,libEnkyCT32.lib 
+#	CFLAGS_SO += -Wl,--out-implib,libEnkyCT32_$(EXTERN).lib 
 endif
 
 

@@ -1,0 +1,33 @@
+cd /boot/grub/
+chmod a+w grub.cfg
+dedit grub.cfg
+
+
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="2"      ##默认启动项  0 开始
+fi
+
+每个启动项都是以menuentry开始，menuentry后面“xxx”是启动项名称，然后｛xxx｝是启动代码。
+
+UOS桌面操作系统V20 64位个人版
+menuentry 'UnionTech OS Desktop 20 Home GNU/Linux' --class uniontech --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-1707cb1b-b84d-47e4-9181-06aa27b1f976' {
+    xxxx
+}
+menuentry 'UOS桌面操作系统V20 64位个人版' --class uniontech --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-1707cb1b-b84d-47e4-9181-06aa27b1f976' {
+    xxxx
+}
+
+UOS桌面操作系统V20 5.4.50内核 64位个人版高级启动项
+menuentry 'UnionTech OS Desktop 20 Home GNU/Linux, with Linux 5.4.50-amd64-desktop' --class uniontech --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.4.50-amd64-desktop-advanced-1707cb1b-b84d-47e4-9181-06aa27b1f976' {
+    xxxx
+}
+
+Widows10 64位操作系统
+menuentry 'Windows 10 (on /dev/sdb1)' --class windows --class os $menuentry_id_option 'osprober-chain-8C28007728006296' {
+    xxxx
+}

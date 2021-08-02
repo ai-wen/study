@@ -214,6 +214,21 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=.../vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windo
 
 
 
+```conf
+默认从https://github.com上下载资源
+vcpkg\scripts\cmake\vcpkg_from_github.cmake
+if(NOT DEFINED arg_GITHUB_HOST)
+    set(github_host "https://github.com")
+    set(github_api_url "https://api.github.com")
+else()
+    set(github_host "${arg_GITHUB_HOST}")
+    set(github_api_url "${arg_GITHUB_HOST}/api/v3")
+endif()
+
+
+可以在portfile.cmake文件中添加GITHUB_HOST 参数
+GITHUB_HOST https://hub.fastgit.org更换下载地址
+```
 ```cpp
 //修改git 下载包路径
 D:\vcpkg\ports\brotli\portfile.cmake

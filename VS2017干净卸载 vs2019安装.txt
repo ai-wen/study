@@ -1,0 +1,50 @@
+如果电脑无法卸载vs2017
+
+进入下面的目录
+%programfiles(x86)%\Microsoft Visual Studio\Installer\resources\app\layout\
+C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\layout
+执行
+InstallCleanup.exe -full
+
+如果没有上面的目录则需要删除目录
+%programfiles(x86)%\Microsoft Visual Studio\Installer
+重新运行安装程序，一边生成这个目录
+vs_enterprise.exe
+
+
+编译Tap-Windows6
+Tap-Windows6和Tap-Windows是有差别的！Tap-Windows6支持Win7以上操作系统
+
+因为Windows Driver Kit带的插件要支持VS2019，于是我就下载了最新的18362省得麻烦
+下载VS2019: https://visualstudio.microsoft.com/zh-hans/vs/
+下载WDK10: 适用于 Windows 10 版本 1903 的 WDK(10.0.18362.1).
+https://go.microsoft.com/fwlink/?linkid=2085767
+
+注意sdk 的版本一定要与wdk版本一致
+
+Windows 10 SDK(10.0.18362.0)（后面会解释为啥要选它）
+MSVC v142 - VS 2019 C++ x64/x86 Spectre缓解库(v14.21)
+Python 2 64-bit(2.7.16) 
+
+如果不仅仅要生成驱动程序，而且还要生成安装包，那么请安装NSIS（如果修改了NSIS安装路径，那么paths.py中NSIS的路径也要对应修改）
+https://nsis.sourceforge.io/Download
+
+
+
+D:\vcpkg\buildtrees\tap-windows6\src\53e4c14d92-ec156f1cb1.clean\version.m4
+dnl define the TAP version
+define([PRODUCT_NAME], [TAP-Windows])
+define([PRODUCT_PUBLISHER], [OpenVPN Technologies, Inc.])
+define([PRODUCT_VERSION], [9.21.2])
+define([PRODUCT_VERSION_RESOURCE], [9,0,0,21])
+define([PRODUCT_TAP_WIN_COMPONENT_ID], [tap0901])
+define([PRODUCT_TAP_WIN_MAJOR], [9])
+define([PRODUCT_TAP_WIN_MINOR], [21])
+define([PRODUCT_TAP_WIN_REVISION], [2])
+define([PRODUCT_TAP_WIN_BUILD], [601])
+define([PRODUCT_TAP_WIN_PROVIDER], [TAP-Windows Provider V9])
+define([PRODUCT_TAP_WIN_CHARACTERISTICS], [0x81])
+define([PRODUCT_TAP_WIN_DEVICE_DESCRIPTION], [TAP-Windows Adapter V9])
+define([PRODUCT_TAP_WIN_RELDATE], [04/08/2014])
+
+PRODUCT_TAP_WIN_COMPONENT_ID要确保与OpenVP的一致，默认是tap0901

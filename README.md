@@ -1,3 +1,18 @@
+# 创建登录Token
+在个人中心，点击setting
+选择Developer settings
+选择Personal access tokens，然后点击generate new Token：
+
+# 移除原来的远程链接
+git remote remove origin
+# 查看git的远程链接
+git remote -v
+# 重新新增git远程链接
+git remote  add origin https://<token>@github.com/ai-wen/study.git
+# 下拉master分支
+git push origin master -u
+
+
 # [git备份镜像站](https://hub.fastgit.org/)
 
 # gcc -E -I. circle.c -o circle.i  预处理删除注释

@@ -1,4 +1,4 @@
-# [windows 7 10 镜像站](https://file.dabaiyun.net/?dir=%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F)
+
 
 # 创建登录Token
 在个人中心，点击setting

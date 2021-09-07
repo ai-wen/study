@@ -1,3 +1,4 @@
+# [sm2加密算法](https://github.com/Arkq/SM2349/blob/master/src/SM2_ENC.c)
 # [SM2加解密算法（基于GMSSL的C代码实现）](https://www.jianshu.com/p/24dd4d79630d)
 
 Devil_Chen

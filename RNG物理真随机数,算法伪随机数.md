@@ -32,7 +32,7 @@
 
 
 # NIST SP 800-90A DRBG
-
+![90b](NIST SP 800-90Ar1 Recommendation for Random Number Generation ... 分析与摘选之一.png)
 ## NRBG 纯物理实现，不可预测
 ## DRBG 使用算法生成
 

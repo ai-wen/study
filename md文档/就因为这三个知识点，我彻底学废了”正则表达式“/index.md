@@ -62,7 +62,7 @@ theme: fancy
 
 如下图箭头所指，位置可以理解为**相邻字符之间的位置**。
 
-![image.png](1.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/1.png)
 
 咱们可以和**空字符串**进行类比, 字符的首尾、间隙都可以用空字符串进行连接。
 
@@ -71,7 +71,7 @@ theme: fancy
 
 ```
 
-![image.png](2.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/2.png)
 
 ## 有哪些位置？
 
@@ -128,7 +128,7 @@ console.log(string.replace(/$/, '😄')) // hello😄
 
 
 
-![image.png](3.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/3.png)
 
 其实只需要执行一行代码就行
 
@@ -142,7 +142,7 @@ console.log(string.replace(/$/, '😄')) // hello😄
 
 
 
-![image.png](4.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/4.png)
 
 ### \B
 
@@ -175,7 +175,7 @@ console.log(string.replace(/$/, '😄')) // hello😄
 
 画图解释如下
 
-![image.png](5.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/5.png)
 
 ### (?=p)
 
@@ -203,7 +203,7 @@ console.log(string.replace(/$/, '😄')) // hello😄
 
 画图理解
 
-![image.png](6.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/6.png)
 
 
 ### (?!p)
@@ -240,7 +240,7 @@ x❤️x❤️x❤️_❤️l❤️o❤️v❤️e❤️_❤️s❤️t❤️u�
 画图解释
 
 
-![image.png](7.png)
+![image.png](https://github.com/ai-wen/study/blob/master/md文档/就因为这三个知识点，我彻底学废了”正则表达式“/7.png)
 
 
 ### (?<!p)

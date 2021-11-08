@@ -19,6 +19,7 @@ git push origin master -u
 
 # gcc -E -I. circle.c -o circle.i  预处理删除注释
 # gcc -E -C -I. circle.c -o circle.c 预处理不删除注释
+# 预处理, 去掉包含的头文件，展开宏 cl "crypto\aes\aes_cbc.c" /EP /C >"crypto\aes\aes_cbc.cpp"
 
 # [国标文档查询](http://www.gmbz.org.cn/main/bzlb.html)
 # [GM/T 0024-2014 SSL VPN 技术规范](http://www.gmbz.org.cn/main/viewfile/20180110021416665180.html)
@@ -98,6 +99,48 @@ Start menu entries: Start menu entries: link to documentation
 make build_libs
 make install
 
+	
+gmssl windows	
+perl Configure VC-WIN64A  no-test no-asm --prefix="G:/GmSSL/out" --openssldir="G:/GmSSL/out/ssl" 
+perl Configure VC-WIN32  no-test no-asm --prefix="G:/GmSSL/out" --openssldir="G:/GmSSL/out/ssl" 
+nmake 
+nmake install
+
+crypto\evp\names2.c
+static void cipher_name_len(const EVP_CIPHER *cipher, const char *from,
+	const char *to, void *x)
+{
+	*((int *)x) += strlen(EVP_CIPHER_name(cipher));
+}
+
+static void cipher_name(const EVP_CIPHER *cipher, const char *from,
+	const char *to, void *x)
+{
+	strcat((char *)x, EVP_CIPHER_name(cipher));
+}
+
+char *EVP_get_ciphernames(int aliases)
+{
+	char *ret = NULL;
+	int len = 0;
+	EVP_CIPHER_do_all_sorted(cipher_name_len, &len);
+
+	ret = OPENSSL_zalloc(len);
+	if (!ret) {
+		return NULL;
+	}
+
+	EVP_CIPHER_do_all_sorted(cipher_name, ret);
+	return ret;
+}
+
+char *EVP_get_digestnames(int aliases)
+{
+	return "sm3:sha1:sha256";
+}
+
+报错 OPENSSL_Uplink(0F37CF50,08): no OPENSSL_Applink
+#include <openssl/applink.c>
 ```
 
 # ![深入理解log机制](http://feihu.me/blog/2014/insight-into-log/) 

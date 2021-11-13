@@ -14,6 +14,12 @@ git remote  add origin https://<token>@github.com/ai-wen/study.git
 # 下拉master分支
 git push origin master -u
 
+git push
+fatal: The current branch master has no upstream branch.
+远程仓库中的文件和我们本地的仓库有差异
+git remote -v进行查看
+git branch -a
+git pull --rebase origin master
 
 # [git备份镜像站](https://hub.fastgit.org/)
 

@@ -1,5 +1,7 @@
 [就因为这三个知识点，我彻底学废了”正则表达式“](https://juejin.cn/post/7021672733213720613)
 
+#### javascript:document.body.contentEditable='true';document.designMode='on'; void 0
+
 # 创建登录Token
 在个人中心，点击setting
 选择Developer settings

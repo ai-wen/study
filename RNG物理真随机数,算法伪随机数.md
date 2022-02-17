@@ -1,10 +1,20 @@
-# CRNGT
+# NRBG  DRBG
+non-deterministic random bit generators (NRBGs) 纯物理实现，不可预测
+Deterministic Random Bit Generators (DRBGs) 确定性的随机比特生成，使用算法生成
+
+
+# Nonce /DRBG seeds
+Nonce是或Number once的缩写，在密码学中Nonce是一个只被使用一次的任意或非重复的随机数值。
+
+
+# CRNGT   Condition Random Numeral Generator Test
 mToken_DRBGGetEntropy
 mToken_DRBGGetEntropyCRNGT
 
 mToken_DRBGGenerate
 mToken_DRBGGenerateCRNGT
 HalAlgSHA256DRBG_Generate
+
 每当生成随机数时，条件随机数生成器(CRNG)自测运行。如果测试失败，系统将记录系统日志消息。这是按照联邦信息处理标准(FIPS)建议执行的。但是，由于再次生成随机数，因此这种影响是无害的。
 根据FIPS，所有RNG必须实施条件随机数生成器测试(CRNGT)。 测试将当前生成的随机数与前一随机数进行比较。如果数字相同，则生成系统日志消息并生成一个随机数。
 运行测试是为了确保随机数的唯一性。重新生成编号时，不会影响功能。
@@ -12,7 +22,6 @@ HalAlgSHA256DRBG_Generate
 NX-OS中有两种类型的随机数生成器(RNG):
 FIPS RNG，在openssl加密库中实现
 非FIPS RNG，即Linux RNG
-
 
 
 

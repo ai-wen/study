@@ -30,6 +30,9 @@ FIPS RNG，在openssl加密库中实现
     它是自然界随机的物理过程（所产物理现象的不确定性）的反映，即使算法等TRNG的所有信息都被暴露，都无法猜测其结果，即高质量的真随机数发生器产生的随机数永远不具备周期性。
 # PRNG 伪随机数发生器  
     伪随机数发生器是基于数学算法的随机数发生器，它由真随机的种子和伪随机网络构成。一旦真随机的种子被暴露，伪随机数发生器的结果就是确定了。
+# PTRNG    
+    PTRNG physical true RNG (short: physical RNG) 
+    NPTRNG non-physical true RNG das digitized analog noise signal iid independent and identically distributed pp
 
 真随机数发生器所产生的随机数来源于真实的随机物理过程,因而彻底地消除了伪随机数的周期性问题, 只有真随机数发生器才能提供真正的、永不重复的随机数序列。这对于某些对随机数质量有特殊要求的应用有重要意义。
 此外，真随机数发生器产生的随机数与计算机的CPU无关。

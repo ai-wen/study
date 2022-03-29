@@ -1,0 +1,6 @@
+LIBRARY GM3000CSP_CNG
+EXPORTS
+    GetKeyStorageInterface
+    GM3000EnumKsp
+    GM3000RegKsp
+    GM3000UnRegKsp

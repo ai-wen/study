@@ -1,0 +1,92 @@
+#ifndef __CIPHER_IDS_H__
+#define __CIPHER_IDS_H__
+
+	/*此处定义支持的算法ID*/
+
+	////////////////////////////////////////////////////////////////////////
+	
+	#define RSA_1024_BITS		1024
+	#define RSA_2048_BITS		2048
+
+	#define ECDH_256_BITS		256
+	#define ECDH_256_K_MAXLEN	((ECDH_256_BITS+31)/32*4)
+	#define ECDH_256_Z_MAXLEN	((ECDH_256_BITS+7)/8)
+
+	#define ECDH_521_BITS		521
+	#define ECDH_521_K_MAXLEN	((ECDH_521_BITS+31)/32*4)
+	#define ECDH_521_Z_MAXLEN	((ECDH_521_BITS+7)/8)
+
+	#define CIPHER_KEY_USAGE_SIGNVERIFY		1
+	#define CIPHER_KEY_USAGE_ENDECRYPY		2
+
+	/* ID BASE */
+	#define CIPHER_ID_BASE						0x40000000UL
+	#define CIPHER_ID_GENERIC					0x4FFFFFFFUL
+
+	/* CIPHER TYPE */
+	#define CIPHER_ID_TYPE_MASK					(CIPHER_ID_BASE + 0xF000)
+	#define CIPHER_ID_HASH_TYPE					(CIPHER_ID_BASE + 0x0000)
+	#define CIPHER_ID_ASYM_TYPE					(CIPHER_ID_BASE + 0x1000)
+	#define CIPHER_ID_SYM_TYPE					(CIPHER_ID_BASE + 0x2000)
+	#define CIPHER_ID_MAC_TYPE					(CIPHER_ID_BASE + 0x4000)
+
+	/* HASH CIPHER TYPE */
+	#define CIPHER_ID_MDx						(CIPHER_ID_HASH_TYPE + 0x00)
+	#define CIPHER_ID_SHAx						(CIPHER_ID_HASH_TYPE + 0x10)
+	/* ASYM CIPHER TYPE */
+	#define CIPHER_ID_RSAx						(CIPHER_ID_ASYM_TYPE + 0x00)
+	#define CIPHER_ID_ECDSAx					(CIPHER_ID_ASYM_TYPE + 0x10)
+	/* SYM CIPHER TYPE */
+	#define CIPHER_ID_AES						(CIPHER_ID_SYM_TYPE + 0x000)
+	#define CIPHER_ID_DES						(CIPHER_ID_SYM_TYPE + 0x100)
+	/* MAC CIPHER TYPE */
+	#define CIPHER_ID_CMAC						(CIPHER_ID_MAC_TYPE + 0x00)
+	#define CIPHER_ID_HMAC						(CIPHER_ID_MAC_TYPE + 0x10)	
+
+	////////////////////////////////////////////////////////////////////////
+
+	#define CIPHER_ID_MD5						(CIPHER_ID_MDx + 0x0)
+	#define CIPHER_ID_SHA1						(CIPHER_ID_SHAx + 0x1)
+	#define CIPHER_ID_SHA224					(CIPHER_ID_SHAx + 0x2)
+	#define CIPHER_ID_SHA256					(CIPHER_ID_SHAx + 0x3)
+	#define CIPHER_ID_SHA384					(CIPHER_ID_SHAx + 0x4)
+	#define CIPHER_ID_SHA512					(CIPHER_ID_SHAx + 0x5)
+	#define CIPHER_ID_RSA1024					(CIPHER_ID_RSAx + 0x0)		
+	#define CIPHER_ID_RSA2048					(CIPHER_ID_RSAx + 0x1)	
+	#define CIPHER_ID_ECDSA256					(CIPHER_ID_ECDSAx + 0x0) //==CIPHER_ID_ECCCDH256	
+	#define CIPHER_ID_ECDSA521					(CIPHER_ID_ECDSAx + 0x1) //==CIPHER_ID_ECCCDH521
+	#define CIPHER_ID_AES128					(CIPHER_ID_AES + 0x00)
+	#define CIPHER_ID_AES192					(CIPHER_ID_AES + 0x10)
+	#define CIPHER_ID_AES256					(CIPHER_ID_AES + 0x20)
+	//#define CIPHER_ID_SDES					(CIPHER_ID_DES + 0x00)
+	#define CIPHER_ID_TDES2						(CIPHER_ID_DES + 0x10)
+	#define CIPHER_ID_TDES3						(CIPHER_ID_DES + 0x20)
+	#define CIPHER_ID_AES128_ECB				(CIPHER_ID_AES128 + 0x0)		
+	#define CIPHER_ID_AES128_CBC				(CIPHER_ID_AES128 + 0x1)
+	#define CIPHER_ID_AES192_ECB				(CIPHER_ID_AES192 + 0x0)		
+	#define CIPHER_ID_AES192_CBC				(CIPHER_ID_AES192 + 0x1)
+	#define CIPHER_ID_AES256_ECB				(CIPHER_ID_AES256 + 0x0)		
+	#define CIPHER_ID_AES256_CBC				(CIPHER_ID_AES256 + 0x1)		
+	//#define CIPHER_ID_SDES_ECB				(CIPHER_ID_SDES + 0x0)				
+	//#define CIPHER_ID_SDES_CBC				(CIPHER_ID_SDES + 0x1)
+	#define CIPHER_ID_TDES2_ECB					(CIPHER_ID_TDES2 + 0x0)				
+	#define CIPHER_ID_TDES2_CBC					(CIPHER_ID_TDES2 + 0x1)
+	#define CIPHER_ID_TDES3_ECB					(CIPHER_ID_TDES3 + 0x0)				
+	#define CIPHER_ID_TDES3_CBC					(CIPHER_ID_TDES3 + 0x1)
+	#define CIPHER_ID_AES128_MAC				(CIPHER_ID_CMAC + 0x0)
+	#define CIPHER_ID_AES192_MAC				(CIPHER_ID_CMAC + 0x1)	
+	#define CIPHER_ID_AES256_MAC				(CIPHER_ID_CMAC + 0x2)	
+	//#define CIPHER_ID_SDES_MAC				(CIPHER_ID_CMAC + 0x3)
+	#define CIPHER_ID_TDES2_MAC					(CIPHER_ID_CMAC + 0x4)
+	#define CIPHER_ID_TDES3_MAC					(CIPHER_ID_CMAC + 0x5)
+	//#define CIPHER_ID_MD5_MAC					(CIPHER_ID_HMAC + 0x0)
+	#define CIPHER_ID_SHA1_MAC					(CIPHER_ID_HMAC + 0x1)
+	//#define CIPHER_ID_SHA224_MAC				(CIPHER_ID_HMAC + 0x2)
+	#define CIPHER_ID_SHA256_MAC				(CIPHER_ID_HMAC + 0x3)
+	#define CIPHER_ID_SHA384_MAC				(CIPHER_ID_HMAC + 0x4)
+	#define CIPHER_ID_SHA512_MAC				(CIPHER_ID_HMAC + 0x5)
+
+#endif
+
+
+

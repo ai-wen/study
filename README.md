@@ -1,3 +1,10 @@
+导出安卓应用
+adb shell pm list packages  
+	package:com.android.camera2   
+adb shell pm path com.android.camera2  
+	AdbProcess::out:package:/system/app/CameraSmartisan/CameraSmartisan.apk  
+adb pull /system/app/CameraSmartisan/CameraSmartisan.apk C:/Users/lw/Desktop/camera  
+
 [就因为这三个知识点，我彻底学废了”正则表达式“](https://juejin.cn/post/7021672733213720613)
 
 #### javascript:document.body.contentEditable='true';document.designMode='on'; void 0

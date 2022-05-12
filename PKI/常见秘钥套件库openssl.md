@@ -36,6 +36,8 @@ perl Configure debug-VC-WIN32  no-shared 32位debug动态库
 编译可调式debug版本32位动态库 步骤  
 1.perl Configure debug-VC-WIN32  shared no-asm --prefix="D:/Git/SSL/openssl-1.1.1g/win32-release" --openssldir="D:/Git/SSL/openssl-1.1.1g/win32-release/ssl"  
 
+##### perl Configure debug-VC-WIN32  shared no-asm enable-fips 
+
 2.nmake  
 3.nmake  install  
 4.nmake test  

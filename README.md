@@ -1,4 +1,6 @@
-导出安卓应用
+fips140-3 acvp kas sp800-56ar3
+
+导出安卓应用  
 adb shell pm list packages  
 	package:com.android.camera2   
 adb shell pm path com.android.camera2  
